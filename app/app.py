@@ -1,17 +1,20 @@
 from flask import Flask
 
+from services.db_service import DBService
 from utilities.dbtools import DBTools
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../static')
 
 conn_param = 'sqlite:///utilities/speedmap.sqlite'
-db = DBTools(conn_param)
+dbtool = DBTools(conn_param)
+dbservice = DBService(dbtool.connect_db())
 
-db.create_tables()
+dbtool.create_tables()
+
 
 @app.route('/')
-def hello_world():
-    return 'Hello, World!'
+def root():
+    return app.send_static_file('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
