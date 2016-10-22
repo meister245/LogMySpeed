@@ -1,6 +1,6 @@
-from model.base import Base
-
 from sqlalchemy import Column, Integer, Float, String, Date, ForeignKeyConstraint
+
+from model.base import Base
 
 
 class SpeedTest(Base):
