@@ -7,6 +7,7 @@ class DBService:
 
     def get_items(self, offset=0, limit=20):
         items = self.db.query(Room) \
+            .order_by(Room.floor_number, Room.room_number) \
             .offset(offset) \
             .limit(limit) \
             .all()

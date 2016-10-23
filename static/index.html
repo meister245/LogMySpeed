@@ -7,50 +7,80 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!--<script type="application/javascript" src="js/process_json.js"></script>-->
+    <script type="application/javascript" src="js/process_json.js"></script>
 
-    <script type="application/javascript">
-        $(document).ready(function(){
-            $.getJSON("/dbitems", function(data){
-                var items =  [];
-                $.each(data, function(key, value){
-                    items.length = 0;
-                    items.push('<td>' + value.floor_number + '</td>');
-                    items.push('<td>' + value.room_number + '</td>');
-                    $.each(value.tests, function(subkey, subvalue){
-                        items.push('<td>' + subvalue.conn_type + '</td>');
-                        items.push('<td>' + subvalue.download_speed + '</td>');
-                        items.push('<td>' + subvalue.upload_speed + '</td>');
-                        items.push('<td>' + subvalue.test_date + '</td>');
-                    });
-                    $('<tr/>', {
-                        html : items.join('')
-                    }).appendTo('tbody')
-                });
-            });
-        });
-    </script>
+    <!--<script type="application/javascript">-->
+        <!--$(document).ready(function(){-->
+            <!--$.getJSON("/dbitems", function(data){-->
+                <!--var items =  [];-->
+                <!--$.each(data, function(key, value){-->
+                    <!--items.length = 0;-->
+                    <!--items.push('<td>' + value.floor_number + '</td>');-->
+                    <!--items.push('<td>' + value.room_number + '</td>');-->
+                    <!--$.each(value.tests, function(subkey, subvalue){-->
+                        <!--items.push('<td>' + subvalue.conn_type + '</td>');-->
+                        <!--items.push('<td>' + subvalue.download_speed + '</td>');-->
+                        <!--items.push('<td>' + subvalue.upload_speed + '</td>');-->
+                        <!--items.push('<td>' + subvalue.test_date + '</td>');-->
+                    <!--});-->
+                    <!--$('<tr/>', {-->
+                        <!--html : items.join('')-->
+                    <!--}).appendTo('tbody')-->
+                <!--});-->
+            <!--});-->
+        <!--});-->
+    <!--</script>-->
 </head>
 <body>
+    <div class="container">
+        <div class="center">
+            <h1>SpeedMap</h1>
 
-<div class="container">
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Floor</th>
-                    <th class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Room</th>
-                    <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Connection</th>
-                    <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Download (MB/s)</th>
-                    <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Upload (MB/s)</th>
-                    <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Test Date</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        </div>
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#wifi">Wi-fi</a></li>
+            <li><a data-toggle="tab" href="#ethernet">Ethernet</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="wifi" class="tab-pane fade in active">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Floor</th>
+                                <th class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Room</th>
+                                <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Connection</th>
+                                <th class="col-xs-1 col-sm-1 col-md-1 col-lg-2">DL (MB/s)</th>
+                                <th class="col-xs-1 col-sm-1 col-md-1 col-lg-2">UL (MB/s)</th>
+                                <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Test Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="ethernet" class="tab-pane fade">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Floor</th>
+                                <th class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Room</th>
+                                <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Connection</th>
+                                <th class="col-xs-1 col-sm-1 col-md-1 col-lg-2">DL (MB/s)</th>
+                                <th class="col-xs-1 col-sm-1 col-md-1 col-lg-2">UL (MB/s)</th>
+                                <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Test Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
 </body>
 </html>
