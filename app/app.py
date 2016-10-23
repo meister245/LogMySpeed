@@ -24,7 +24,7 @@ def root():
     return app.send_static_file('index.html')
 
 
-@app.route('/dbitems', methods=['GET', 'POST'])
+@app.route('/json', methods=['GET', 'POST'])
 def send_json():
     item_dicts = [item.to_dict() for item in dbservice.get_items()]
     return json.dumps(item_dicts)

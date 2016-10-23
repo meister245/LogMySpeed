@@ -1,5 +1,5 @@
 $(document).ready(function(){
-            $.getJSON("/dbitems", function(data){
+            $.getJSON("/json", function(data){
                 var items =  [];
                 $.each(data, function(key, value){
                     items.length = 0;
