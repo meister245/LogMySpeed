@@ -9,6 +9,12 @@ class Room(Base):
 
     room_id = Column(Integer, primary_key=True, autoincrement=True)
     room_number = Column(Integer, unique=True, nullable=False)
-    floor = Column(Integer, nullable=False)
+    floor_number = Column(Integer, nullable=False)
 
     tests = relationship("SpeedTest", uselist=True, backref="SpeedTest", cascade="save-update")
+
+    def to_dict(self):
+        output_dict = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        output_dict['tests'] = [speedtest.to_dict() for speedtest in self.tests]
+
+        return output_dict

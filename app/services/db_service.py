@@ -9,5 +9,5 @@ class DBService:
         items = self.db.query(Room) \
             .offset(offset) \
             .limit(limit) \
-            .first()
+            .all()
         return items

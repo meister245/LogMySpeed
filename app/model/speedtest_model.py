@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import Column, Integer, Float, String, Date, ForeignKeyConstraint
 
 from model.base import Base
@@ -8,6 +10,7 @@ class SpeedTest(Base):
 
     test_id = Column(Integer, primary_key=True, autoincrement=True)
     room_id = Column(Integer, nullable=False)
+    device_type = Column(String(10), nullable=False)
     conn_type = Column(String(10), nullable=False)
     download_speed = Column(Float, nullable=False)
     upload_speed = Column(Float, nullable=False)
@@ -16,3 +19,8 @@ class SpeedTest(Base):
     __table_args__ = (
         ForeignKeyConstraint(['room_id'], ['room.room_id']),
     )
+
+    def to_dict(self):
+        speedtest_dict = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        speedtest_dict['test_date'] = datetime.strftime(speedtest_dict['test_date'], '%Y-%m-%d')
+        return speedtest_dict

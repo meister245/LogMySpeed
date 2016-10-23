@@ -1,6 +1,7 @@
+import json
 from os.path import isfile
 
-from flask import Flask
+from flask import Flask, Response
 
 from services.db_service import DBService
 from utilities.dbtools import DBTools
@@ -22,6 +23,11 @@ if conn_param.startswith('sqlite'):
 def root():
     return app.send_static_file('index.html')
 
+
+@app.route('/dbitems', methods=['GET', 'POST'])
+def send_json():
+    item_dicts = [item.to_dict() for item in dbservice.get_items()]
+    return json.dumps(item_dicts)
 
 if __name__ == '__main__':
     app.run(debug=True)
