@@ -1,5 +1,5 @@
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer
+from sqlalchemy import Column, Integer, String
 
 from model.base import Base
 
@@ -10,6 +10,7 @@ class Room(Base):
     room_id = Column(Integer, primary_key=True, autoincrement=True)
     room_number = Column(Integer, unique=True, nullable=False)
     floor_number = Column(Integer, nullable=False)
+    conn_type = Column(String(10), nullable=False)
 
     tests = relationship("SpeedTest", uselist=True, backref="SpeedTest", cascade="save-update")
 

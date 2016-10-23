@@ -24,10 +24,14 @@ def root():
     return app.send_static_file('index.html')
 
 
-@app.route('/json', methods=['GET', 'POST'])
-def send_json():
-    item_dicts = [item.to_dict() for item in dbservice.get_items()]
-    return json.dumps(item_dicts)
+@app.route('/wifi', methods=['GET', 'POST'])
+def send_wifi_data():
+    return dbtool.send_json('Wi-fi')
+
+
+@app.route('/ethernet', methods=['GET', 'POST'])
+def send_ethernet_data():
+    return dbtool.send_json('Ethernet')
 
 if __name__ == '__main__':
     app.run(debug=True)
