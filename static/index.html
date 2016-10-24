@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
+
     <title>SpeedMap UI</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,10 +9,20 @@
     <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="static/img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"></script>
+
+    <script type="application/javascript" src="static/js/generate_html.js"></script>
     <script type="application/javascript" src="static/js/process_json.js"></script>
+    <script type="application/javascript" src="static/js/mobile.js"></script>
+    <style>
+        .glyphicon {
+            top: 0px;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-static-top">
@@ -21,15 +32,38 @@
                     <img alt="speedmap-logo" src="static/img/favicon.ico">
                 </a>
             </div>
-            <ul class="nav navbar-nav">
-                <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-                <li><a data-toggle="tab" href="#wifi">Wi-fi</a></li>
-                <li><a data-toggle="tab" href="#ethernet">Ethernet</a></li>
-                <li><a data-toggle="tab" href="#about">About</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <button type="button" class="btn navbar-btn btn-outline-primary">Start Speedtest</button>
-            </ul>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+                    <li><a data-toggle="tab" href="#wifi">Wi-fi</a></li>
+                    <li><a data-toggle="tab" href="#ethernet">Ethernet</a></li>
+                    <li><a data-toggle="tab" href="#about">About</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-form navbar">
+                    <div class="form-group">
+                        <div class="input-group input-group">
+                            <span class="input-group-addon glyphicon glyphicon-home"></span>
+                            <select class="form-control selectpicker" id="rooms" data-size="5" data-live-search="true" title="Room Number">
+                            </select>
+                            <span class="input-group-addon glyphicon glyphicon-circle-arrow-down"></span>
+                            <select class="form-control selectpicker" data-size="5" data-live-search="true" title="Connection">
+                                <option value="wifi">Wi-fi</option>
+                                <option value="ethernet">Ethernet</option>
+                            </select>
+                            <span class="input-group-addon glyphicon glyphicon-phone"></span>
+                            <select class="form-control selectpicker" data-size="5" data-live-search="true" title="Device">
+                                <option value="smartphone">Smartphone</option>
+                                <option value="notebook">Notebook</option>
+                                <option value="tablet">Tablet</option>
+                                <option value="desktop">Desktop</option>
+                            </select>
+                        </div>
+                    </div>
+                </ul>
+                <ul class="nav navbar-nav navbar-form navbar">
+                    <button type="submit" class="btn btn-default btn-primary">Start Speedtest</button>
+                </ul>
+            </div>
         </div>
     </nav>
     <div class="container">
@@ -44,7 +78,7 @@
                     <table class="table">
                         <thead class="header-data">
                         </thead>
-                        <tbody class="wifi-data">
+                        <tbody id="wifi-data">
                         </tbody>
                     </table>
                 </div>
@@ -54,7 +88,7 @@
                     <table class="table">
                         <thead class="header-data">
                         </thead>
-                        <tbody class="ethernet-data">
+                        <tbody id="ethernet-data">
                         </tbody>
                     </table>
                 </div>
