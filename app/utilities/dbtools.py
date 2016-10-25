@@ -37,7 +37,6 @@ class DBTools:
                                          nickname=random.choice(['John', 'Barbara', 'Stephen', 'Sarah']),
                                          device_type=random.choice(['Desktop', 'Mobile']),
                                          download_speed=round(random.uniform(0.5, 8.5), 2),
-                                         upload_speed=round(random.uniform(1.0, 6.5), 2),
                                          test_date=random_datetime(start='2016-05-22', stop='2016-11-05'))
 
                 newroom.tests.append(newspeedtest)

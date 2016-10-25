@@ -7,19 +7,15 @@ $(document).ready(function () {
             items.push('<td>' + value.room_number + '</td>');
             items.push('<td>');
             $.each(value.tests, function (subkey, subvalue) {
-                items.push(subvalue.nickname + '<br/>');
-            });
-            items.push('</td>' + '<td>');
-            $.each(value.tests, function (subkey, subvalue) {
                 items.push(subvalue.device_type + '<br/>');
             });
             items.push('</td>' + '<td>');
             $.each(value.tests, function (subkey, subvalue) {
-                items.push(subvalue.download_speed + ' MB/s<br/>');
+                items.push(subvalue.download_speed + ' Mbps<br/>');
             });
             items.push('</td>' + '<td>');
             $.each(value.tests, function (subkey, subvalue) {
-                items.push(subvalue.upload_speed + ' MB/s<br/>');
+                items.push(subvalue.nickname + '<br/>');
             });
             items.push('</td>' + '<td>');
             $.each(value.tests, function (subkey, subvalue) {
@@ -42,19 +38,15 @@ $(document).ready(function () {
             items.push('<td>' + value.room_number + '</td>');
             items.push('<td>');
             $.each(value.tests, function (subkey, subvalue) {
-                items.push(subvalue.nickname + '<br/>');
-            });
-            items.push('</td>' + '<td>');
-            $.each(value.tests, function (subkey, subvalue) {
                 items.push(subvalue.device_type + '<br/>');
             });
             items.push('</td>' + '<td>');
             $.each(value.tests, function (subkey, subvalue) {
-                items.push(subvalue.download_speed + ' MB/s<br/>');
+                items.push(subvalue.download_speed + ' Mbps<br/>');
             });
             items.push('</td>' + '<td>');
             $.each(value.tests, function (subkey, subvalue) {
-                items.push(subvalue.upload_speed + ' MB/s<br/>');
+                items.push(subvalue.nickname + '<br/>');
             });
             items.push('</td>' + '<td>');
             $.each(value.tests, function (subkey, subvalue) {

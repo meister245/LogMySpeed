@@ -13,7 +13,6 @@ class SpeedTest(Base):
     nickname = Column(String(15), nullable=True)
     device_type = Column(String(10), nullable=False)
     download_speed = Column(Float, nullable=False)
-    upload_speed = Column(Float, nullable=False)
     test_date = Column(Date, nullable=False)
 
     __table_args__ = (
