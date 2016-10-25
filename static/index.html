@@ -9,7 +9,8 @@
     <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="static/img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -22,83 +23,112 @@
         .glyphicon {
             top: 0px;
         }
+
+        .navbar {
+            -webkit-box-shadow: 0 8px 6px -6px #999;
+            -moz-box-shadow: 0 8px 6px -6px #999;
+            box-shadow: 0 8px 6px -6px #999;
+        }
+
+        .margin-top-25 {
+            margin-top: 25px;
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">
-                    <img alt="speedmap-logo" src="static/img/favicon.ico">
-                </a>
-            </div>
-            <div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-                    <li><a data-toggle="tab" href="#wifi">Wi-fi</a></li>
-                    <li><a data-toggle="tab" href="#ethernet">Ethernet</a></li>
-                    <li><a data-toggle="tab" href="#about">About</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-form navbar">
-                    <div class="form-group">
-                        <div class="input-group input-group">
-                            <span class="input-group-addon glyphicon glyphicon-home"></span>
-                            <select class="form-control selectpicker" id="rooms" data-size="5" data-live-search="true" title="Room Number">
-                            </select>
-                            <span class="input-group-addon glyphicon glyphicon-circle-arrow-down"></span>
-                            <select class="form-control selectpicker" data-size="5" data-live-search="true" title="Connection">
-                                <option value="wifi">Wi-fi</option>
-                                <option value="ethernet">Ethernet</option>
-                            </select>
-                            <span class="input-group-addon glyphicon glyphicon-phone"></span>
-                            <select class="form-control selectpicker" data-size="5" data-live-search="true" title="Device">
-                                <option value="smartphone">Smartphone</option>
-                                <option value="notebook">Notebook</option>
-                                <option value="tablet">Tablet</option>
-                                <option value="desktop">Desktop</option>
-                            </select>
-                        </div>
-                    </div>
-                </ul>
-                <ul class="nav navbar-nav navbar-form navbar">
-                    <button type="submit" class="btn btn-default btn-primary">Start Speedtest</button>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<nav class="navbar navbar-default">
     <div class="container">
-        <div class="tab-content">
-            <div id="home" class="tab-pane fade in active">
-                <div>
-                    WIP
-                </div>
-            </div>
-            <div id="wifi" class="tab-pane fade">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead class="header-data">
-                        </thead>
-                        <tbody id="wifi-data">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div id="ethernet" class="tab-pane fade">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead class="header-data">
-                        </thead>
-                        <tbody id="ethernet-data">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div id="about" class="tab-pane fade">
-                <div>
-                    WIP
-                </div>
-            </div>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navigationbar" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <img alt="speedmap-logo" src="static/img/favicon.ico">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navigationbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+                <li><a data-toggle="tab" href="#wifi">Wi-fi</a></li>
+                <li><a data-toggle="tab" href="#ethernet">Ethernet</a></li>
+                <li><a data-toggle="tab" href="#about">About</a></li>
+            </ul>
         </div>
     </div>
+</nav>
+<div class="container">
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon-home"></span>
+                            <select class="form-control selectpicker" id="rooms" data-size="5" data-live-search="true"
+                                    title="Room Number"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon-circle-arrow-down"></span>
+                            <select class="form-control selectpicker" id="connection" data-size="5"
+                                    data-live-search="true" title="Connection"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon-phone"></span>
+                            <select class="form-control selectpicker" id="device" data-size="5" data-live-search="true"
+                                    title="Device"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon-user"></span>
+                            <input type="text" class="form-control selectpicker" data-size="5" data-live-search="true"
+                                   placeholder="Nickname (Optional)">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center margin-top-25">
+                    <button type="submit" class="btn btn-lg btn-primary">Start Speedtest</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="wifi" class="tab-pane fade">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="header-data">
+                    </thead>
+                    <tbody id="wifi-data">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="ethernet" class="tab-pane fade">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="header-data">
+                    </thead>
+                    <tbody id="ethernet-data">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="about" class="tab-pane fade">
+            <div>
+                WIP
+            </div>
+        </div>
+
+    </div>
+</div>
 </body>
 </html>

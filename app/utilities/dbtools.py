@@ -34,6 +34,7 @@ class DBTools:
 
             for i in xrange(random.randint(1, 3)):
                 newspeedtest = SpeedTest(room_id=random.randint(1, 100),
+                                         nickname=random.choice(['John', 'Barbara', 'Stephen', 'Sarah']),
                                          device_type=random.choice(['Desktop', 'Mobile']),
                                          download_speed=round(random.uniform(0.5, 8.5), 2),
                                          upload_speed=round(random.uniform(1.0, 6.5), 2),

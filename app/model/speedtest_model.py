@@ -10,6 +10,7 @@ class SpeedTest(Base):
 
     test_id = Column(Integer, primary_key=True, autoincrement=True)
     room_id = Column(Integer, nullable=False)
+    nickname = Column(String(15), nullable=True)
     device_type = Column(String(10), nullable=False)
     download_speed = Column(Float, nullable=False)
     upload_speed = Column(Float, nullable=False)
