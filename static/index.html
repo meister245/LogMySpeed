@@ -19,7 +19,7 @@
     <script type="application/javascript" src="static/js/process_json.js" async></script>
     <script type="text/javascript" src="static/js/speedtest.js"></script>
     <script type="text/javascript" src="static/js/generate_html.js"></script>
-    <script type="text/javascript" src="static/js/mobile.js"></script>
+    <script type="text/javascript" src="static/js/app.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -49,15 +49,15 @@
 <div class="container">
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
-            <div class="text-center">
-                Do not use with mobile data plans!
+            <div id="dataplanwarning" class="alert alert-warning text-center fade" style="display: none" role="alert">
+                <p>Do not use test on <b>mobile data plan</b>! You have been warned.</p>
             </div>
-            <div class="jumbotron margin-top-25">
+            <div class="jumbotron margin-top-25" id="speedInput">
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-home"></span>
-                            <select class="form-control selectpicker required" id="rooms" data-size="5"
+                            <select class="form-control selectpicker" id="rooms" data-size="5"
                                     data-live-search="true"
                                     title="Room Number"></select>
                         </div>
@@ -65,14 +65,14 @@
                     <div class="col-lg-3">
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-circle-arrow-down"></span>
-                            <select class="form-control selectpicker required" id="connection" data-size="5"
+                            <select class="form-control selectpicker" id="connection" data-size="5"
                                     data-live-search="true" title="Connection"></select>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-phone"></span>
-                            <select class="form-control selectpicker required" id="device" data-size="5"
+                            <select class="form-control selectpicker" id="device" onchange="DataPlanWarning()" data-size="5"
                                     data-live-search="true"
                                     title="Device"></select>
                         </div>
@@ -80,17 +80,17 @@
                     <div class="col-lg-3">
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-user"></span>
-                            <input type="text" class="form-control selectpicker" data-size="5" data-live-search="true"
+                            <input type="text" class="form-control selectpicker" id="nickname" data-size="5" data-live-search="true"
                                    placeholder="Nickname (Optional)">
                         </div>
                     </div>
                 </div>
-                <div class="text-center margin-top-25">
-                    <button type="submit" class="btn btn-lg btn-primary" onclick="InitiateSpeedDetection()">Start
-                        Speedtest
-                    </button>
-                </div>
             </div>
+            <div class="text-center margin-top-25">
+                <button type="submit" id="startTest" class="btn btn-lg btn-primary" onclick="StartTest()">Start Test
+                </button>
+            </div>
+            <div class="text-center margin-top-25" id="progress"></div>
         </div>
 
         <div id="wifi" class="tab-pane fade">
