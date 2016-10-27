@@ -33,20 +33,30 @@ function prepareJSON(speedResult) {
             floor_number = 7;
     }
 
-    var requestData = {
-        "floorNumber": floor_number,
-        "roomNumber": room_number,
-        "connection": connection_type,
-        "device": device_type,
-        "nickname": nickname,
-        "downloadSpeed": speedResult,
-        "test_date": test_date
+    var test_result = {
+        floorNumber: floor_number,
+        roomNumber: room_number,
+        connection: connection_type,
+        device: device_type,
+        nickname: nickname,
+        downloadSpeed: speedResult,
+        test_date: test_date
     };
-    sendJSON(requestData);
+
+    sendJSON(test_result);
 }
 
-function sendJSON(requestData){
-    console.log(requestData)
+function sendJSON(asd) {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: "/testresult",
+        data: JSON.stringify(asd),
+        success: function (sad) {
+            console.log(sad);
+        },
+        dataType: "json"
+    });
 }
 
 $(document).ready(function () {

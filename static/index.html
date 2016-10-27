@@ -17,9 +17,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"></script>
 
     <script type="application/javascript" src="static/js/process_json.js" async></script>
-    <script type="text/javascript" src="static/js/speedtest.js"></script>
-    <script type="text/javascript" src="static/js/generate_html.js"></script>
-    <script type="text/javascript" src="static/js/app.js"></script>
+    <script type="text/javascript" src="static/js/speedtest.js" async></script>
+    <script type="text/javascript" src="static/js/generate_html.js" defer></script>
+    <script type="text/javascript" src="static/js/app.js" defer></script>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -42,6 +42,9 @@
                 <li><a data-toggle="tab" href="#wifi">Wi-fi</a></li>
                 <li><a data-toggle="tab" href="#ethernet">Ethernet</a></li>
                 <li><a data-toggle="tab" href="#about">About</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <button type="button" class="btn navbar-btn btn-primary disabled">Pre-Alpha</button>
             </ul>
         </div>
     </div>
@@ -87,8 +90,7 @@
                 </div>
             </div>
             <div class="text-center margin-top-25">
-                <button type="submit" id="startTest" class="btn btn-lg btn-primary" onclick="StartTest()">Start Test
-                </button>
+                <button type="submit" id="startTest" class="btn btn-lg btn-primary" onclick="StartTest()">Start Test</button>
             </div>
             <div class="text-center margin-top-25" id="progress"></div>
         </div>

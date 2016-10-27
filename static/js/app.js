@@ -16,10 +16,10 @@ function DataPlanWarning() {
 function StartTest(){
     $("#dataplanwarning").removeClass('in').slideUp();
     $("#speedInput").slideToggle();
-    $("#startTest").slideToggle();
+    // $("#startTest").slideToggle();
 
 
-    // InitiateSpeedDetection()
+    InitiateSpeedDetection()
 }
 
 // toogle mobile navbar collapse on action
