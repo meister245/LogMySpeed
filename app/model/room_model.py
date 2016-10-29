@@ -1,21 +1,22 @@
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer
 
-from model.base import Base
+from base import Base
 
 
 class Room(Base):
     __tablename__ = 'room'
 
     room_id = Column(Integer, primary_key=True, autoincrement=True)
-    room_number = Column(Integer, unique=True, nullable=False)
+    room_number = Column(Integer, nullable=False)
     floor_number = Column(Integer, nullable=False)
-    conn_type = Column(String(10), nullable=False)
-
-    tests = relationship("SpeedTest", uselist=True, backref="SpeedTest", cascade="save-update")
 
     def to_dict(self):
-        output_dict = {c.name: getattr(self, c.name) for c in self.__table__.columns}
-        output_dict['tests'] = [speedtest.to_dict() for speedtest in self.tests]
+        room_dict = {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-        return output_dict
+        return room_dict
+
+    def from_dict(self, request_data):
+        room_obj = Room(room_number=request_data.get('roomNumber'),
+                        floor_number=request_data.get('floorNumber'))
+
+        return room_obj

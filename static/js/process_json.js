@@ -5,7 +5,6 @@ function prepareJSON(speedResult) {
     connection_type = $('#connection').find(":selected").text();
     device_type = $('#device').find(":selected").text();
     nickname = $('#nickname').val();
-    test_date = (new Date()).getTime();
 
     switch (true) {
         case room_number <= 14:
@@ -33,98 +32,125 @@ function prepareJSON(speedResult) {
             floor_number = 7;
     }
 
-    var test_result = {
+    var data = {
         floorNumber: floor_number,
         roomNumber: room_number,
-        connection: connection_type,
-        device: device_type,
+        connType: connection_type,
         nickname: nickname,
-        downloadSpeed: speedResult,
-        test_date: test_date
+        deviceType: device_type,
+        downloadSpeed: speedResult
     };
 
-    sendJSON(test_result);
+    sendJSON(data);
 }
 
-function sendJSON(asd) {
+function sendJSON(data) {
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
         url: "/testresult",
-        data: JSON.stringify(asd),
-        success: function (sad) {
-            console.log(sad);
-        },
+        data: JSON.stringify(data),
         dataType: "json"
     });
 }
 
-$(document).ready(function () {
+function getWifiData() {
     $.getJSON("/wifi", function (data) {
+        $("#wifi-data").empty();
         var items = [];
-        $.each(data, function (key, value) {
+        for (var a in data) {
             items.length = 0;
-            if (value.floor_number == 0) {
-                items.push('<td> földszint </td>');
-            } else {
-                items.push('<td>' + value.floor_number + '. emelet</td>');
+            var rooms = data[a].rooms;
+            var tests = data[a].tests;
+
+            for (var fn in rooms) {
+                if (rooms[fn].floor_number == 0) {
+                    items.push('<td> földszint </td>');
+                } else {
+                    items.push('<td>' + rooms[fn].floor_number + '. emelet</td>');
+                }
             }
-            items.push('<td>' + value.room_number + '</td>');
+
             items.push('<td>');
-            $.each(value.tests, function (subkey, subvalue) {
-                items.push(subvalue.device_type + '<br/>');
-            });
-            items.push('</td>' + '<td>');
-            $.each(value.tests, function (subkey, subvalue) {
-                items.push(subvalue.download_speed + ' Mbps<br/>');
-            });
-            items.push('</td>' + '<td>');
-            $.each(value.tests, function (subkey, subvalue) {
-                items.push(subvalue.nickname + '<br/>');
-            });
-            items.push('</td>' + '<td>');
-            $.each(value.tests, function (subkey, subvalue) {
-                items.push(subvalue.test_date + '<br/>');
-            });
+            for (var rn in rooms) {
+                items.push(rooms[rn].room_number + '<br/>');
+            }
+
+            items.push('</td><td>');
+            for (var dt in tests) {
+                items.push(tests[dt].device_type + '<br/>');
+            }
+
+            items.push('</td><td>');
+            for (var ds in tests) {
+                items.push(tests[ds].download_speed + '<br/>');
+            }
+
+            items.push('</td><td>');
+            for (var n in tests) {
+                items.push(tests[n].nickname + '<br/>');
+            }
+
+            items.push('</td><td>');
+            for (var td in tests) {
+                items.push(tests[td].test_date + '<br/>');
+            }
+
             items.push('</td>');
             $('<tr/>', {
                 html: items.join('')
             }).appendTo(document.getElementById('wifi-data'))
-        });
+        }
     });
-});
+}
 
-$(document).ready(function () {
+
+function getEthernetData() {
     $.getJSON("/ethernet", function (data) {
+        $("#ethernet-data").empty();
         var items = [];
-        $.each(data, function (key, value) {
+        for (var a in data) {
             items.length = 0;
-            if (value.floor_number == 0) {
-                items.push('<td> földszint </td>');
-            } else {
-                items.push('<td>' + value.floor_number + '. emelet</td>');
+            var rooms = data[a].rooms;
+            var tests = data[a].tests;
+
+            for (var fn in rooms) {
+                if (rooms[fn].floor_number == 0) {
+                    items.push('<td> földszint </td>');
+                } else {
+                    items.push('<td>' + rooms[fn].floor_number + '. emelet</td>');
+                }
             }
-            items.push('<td>' + value.room_number + '</td>');
+
             items.push('<td>');
-            $.each(value.tests, function (subkey, subvalue) {
-                items.push(subvalue.device_type + '<br/>');
-            });
-            items.push('</td>' + '<td>');
-            $.each(value.tests, function (subkey, subvalue) {
-                items.push(subvalue.download_speed + ' Mbps<br/>');
-            });
-            items.push('</td>' + '<td>');
-            $.each(value.tests, function (subkey, subvalue) {
-                items.push(subvalue.nickname + '<br/>');
-            });
-            items.push('</td>' + '<td>');
-            $.each(value.tests, function (subkey, subvalue) {
-                items.push(subvalue.test_date + '<br/>');
-            });
+            for (var rn in rooms) {
+                items.push(rooms[rn].room_number + '<br/>');
+            }
+
+            items.push('</td><td>');
+            for (var dt in tests) {
+                items.push(tests[dt].device_type + '<br/>');
+            }
+
+            items.push('</td><td>');
+            for (var ds in tests) {
+                items.push(tests[ds].download_speed + '<br/>');
+            }
+
+            items.push('</td><td>');
+            for (var n in tests) {
+                items.push(tests[n].nickname + '<br/>');
+            }
+
+            items.push('</td><td>');
+            for (var td in tests) {
+                items.push(tests[td].test_date + '<br/>');
+            }
+
             items.push('</td>');
             $('<tr/>', {
                 html: items.join('')
             }).appendTo(document.getElementById('ethernet-data'))
-        });
+        }
     });
-});
+}

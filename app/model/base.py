@@ -1,8 +1,8 @@
 from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
 
 
 class Base(object):
-
     @classmethod
     def get_tables(cls):
         return cls.metadata.sorted_tables
@@ -14,5 +14,10 @@ class Base(object):
     @classmethod
     def drop_tables(cls, db, tables=None, checkfirst=True):
         return cls.metadata.drop_all(db, tables, checkfirst)
+
+    @staticmethod
+    def format_date(date_data):
+        return datetime.strftime(date_data, '%Y-%m-%d')
+
 
 Base = declarative_base(cls=Base)

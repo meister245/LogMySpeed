@@ -2,23 +2,21 @@ from os.path import isfile
 import json
 
 from flask import Flask, request
-from flask_cors import CORS
 
 from services.db_service import DBService
-from utilities.dbtools import DBTools
+from utilities.db_tools import DBTools
 
 app = Flask(__name__, static_folder='../static')
-CORS(app)
 
 conn_param = 'sqlite:///utilities/speedmap.sqlite'
-dbtool = DBTools(conn_param)
-dbservice = DBService(dbtool.db)
+db_tool = DBTools(conn_param)
+db_service = DBService(db_tool.db)
 
 if conn_param.startswith('sqlite'):
     if isfile(conn_param[9:]) is False:
-        dbtool.drop_tables()
-        dbtool.create_tables()
-        dbtool.generate_items(30)
+        db_tool.drop_tables()
+        db_tool.create_tables()
+        db_tool.generate_items(30)
 
 
 @app.route('/')
@@ -26,20 +24,26 @@ def root():
     return app.send_static_file('index.html')
 
 
-@app.route('/testresult', methods=['GET', 'POST'])
+@app.route('/testresult', methods=['POST'])
 def get_test_result():
-    result = json.loads(request.get_json())
-    print result
+    data = request.get_json()
+    db_service.create_item(data)
+    print data
+    if len(data) > 0:
+        return 'HTTP 201 Created'
+    else:
+        return 'HTTP 400 Bad Request'
 
 
-@app.route('/wifi', methods=['GET', 'POST'])
+@app.route('/wifi', methods=['GET'])
 def send_wifi_data():
-    return dbtool.send_json('Wi-fi')
+    return db_tool.send_json('Wi-fi')
 
 
-@app.route('/ethernet', methods=['GET', 'POST'])
+@app.route('/ethernet', methods=['GET'])
 def send_ethernet_data():
-    return dbtool.send_json('Ethernet')
+    return db_tool.send_json('Ethernet')
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=9000, use_reloader=True)
