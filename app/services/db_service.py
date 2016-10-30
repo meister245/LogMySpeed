@@ -1,12 +1,8 @@
 from datetime import datetime, timedelta
 
-from sqlalchemy import desc, and_
-
 from model.connection_model import Connection
 from model.room_model import Room
 from model.speedtest_model import SpeedTest
-
-week_interval_before = datetime.now() - timedelta(days=1)
 
 
 class DBService:
@@ -18,7 +14,7 @@ class DBService:
             .join(Connection.rooms) \
             .join(Connection.tests) \
             .filter(Connection.conn_type == conn_type) \
-            .order_by(Room.floor_number, Room.room_number, desc(SpeedTest.test_date)) \
+            .order_by(Room.room_number, SpeedTest.test_date.desc()) \
             .all()
         return items
 

@@ -18,7 +18,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    var connection = ['Wi-fi', 'Ethernet'];
+    var connection = {wifi: 'Wi-fi', ethernet:'Ethernet'};
     for (var i in connection) {
         $("#connection").append('<option value="' + connection[i] + '">' + connection[i] + '</option>');
 

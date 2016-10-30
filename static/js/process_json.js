@@ -54,10 +54,11 @@ function sendJSON(data) {
     });
 }
 
-function getWifiData() {
-    $.getJSON("/wifi", function (data) {
-        $("#wifi-data").empty();
+function getData(conn_type) {
+    $.getJSON('/data?type=' + conn_type, function (data) {
+        $('#' + conn_type + '-data').empty();
         var items = [];
+        console.log(data);
         for (var a in data) {
             items.length = 0;
             var rooms = data[a].rooms;
@@ -99,58 +100,7 @@ function getWifiData() {
             items.push('</td>');
             $('<tr/>', {
                 html: items.join('')
-            }).appendTo(document.getElementById('wifi-data'))
-        }
-    });
-}
-
-
-function getEthernetData() {
-    $.getJSON("/ethernet", function (data) {
-        $("#ethernet-data").empty();
-        var items = [];
-        for (var a in data) {
-            items.length = 0;
-            var rooms = data[a].rooms;
-            var tests = data[a].tests;
-
-            for (var fn in rooms) {
-                if (rooms[fn].floor_number == 0) {
-                    items.push('<td> földszint </td>');
-                } else {
-                    items.push('<td>' + rooms[fn].floor_number + '. emelet</td>');
-                }
-            }
-
-            items.push('<td>');
-            for (var rn in rooms) {
-                items.push(rooms[rn].room_number + '<br/>');
-            }
-
-            items.push('</td><td>');
-            for (var dt in tests) {
-                items.push(tests[dt].device_type + '<br/>');
-            }
-
-            items.push('</td><td>');
-            for (var ds in tests) {
-                items.push(tests[ds].download_speed + '<br/>');
-            }
-
-            items.push('</td><td>');
-            for (var n in tests) {
-                items.push(tests[n].nickname + '<br/>');
-            }
-
-            items.push('</td><td>');
-            for (var td in tests) {
-                items.push(tests[td].test_date + '<br/>');
-            }
-
-            items.push('</td>');
-            $('<tr/>', {
-                html: items.join('')
-            }).appendTo(document.getElementById('ethernet-data'))
+            }).appendTo(document.getElementById(conn_type + '-data'))
         }
     });
 }

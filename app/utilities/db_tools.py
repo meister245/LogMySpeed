@@ -26,7 +26,7 @@ class DBTools:
 
     def generate_items(self, count):
         for i in xrange(count):
-            newconn = Connection(conn_type=random.choice(['Wi-fi', 'Ethernet']),
+            newconn = Connection(conn_type=random.choice(['Wifi', 'Ethernet']),
                                  rooms=[],
                                  tests=[])
 
@@ -47,6 +47,6 @@ class DBTools:
         self.db.commit()
         return
 
-    def send_json(self, conn_type):
+    def data_to_json(self, conn_type):
         item_dicts = [item.to_dict() for item in DBService(self.db).get_items(conn_type)]
         return json.dumps(item_dicts)

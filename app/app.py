@@ -1,5 +1,6 @@
 from os.path import isfile
 import json
+from string import capitalize
 
 from flask import Flask, request
 
@@ -35,14 +36,10 @@ def get_test_result():
         return 'HTTP 400 Bad Request'
 
 
-@app.route('/wifi', methods=['GET'])
-def send_wifi_data():
-    return db_tool.send_json('Wi-fi')
-
-
-@app.route('/ethernet', methods=['GET'])
-def send_ethernet_data():
-    return db_tool.send_json('Ethernet')
+@app.route('/data', methods=['GET'])
+def send_json():
+    conn_type = request.args.get('type').capitalize()
+    return db_tool.data_to_json(conn_type)
 
 
 if __name__ == '__main__':
