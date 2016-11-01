@@ -13,7 +13,8 @@ class DBService:
         self.engine = create_engine(conn_param)
         self.session = sessionmaker(bind=self.engine)
         self.db = self.session()
-        self.db.execute('PRAGMA foreign_keys = ON;')
+        if conn_param.startswith("sqlite"):
+            self.db.execute('PRAGMA foreign_keys = ON;')
 
     def get_items(self, conn_type):
         items = self.db.query(Connection) \
@@ -25,9 +26,15 @@ class DBService:
         return items
 
     def create_item(self, request_data):
-        obj = Connection().from_dict(request_data)
-        self.db.add(obj)
-        self.db.commit()
+        try:
+            obj = Connection().from_dict(request_data)
+
+            self.db.add(obj)
+            self.db.commit()
+
+        except Exception as e:
+            raise e
+
         return
 
     def data_to_json(self, conn_type):

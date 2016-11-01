@@ -3,7 +3,11 @@ from sqlalchemy import Column, Integer, String
 
 from base import Base
 from association import room_conn
+from room_model import Room
+from speedtest_model import  SpeedTest
 
+room_obj = Room()
+test_obj = SpeedTest()
 
 class Connection(Base):
     __tablename__ = 'connection'
@@ -27,8 +31,7 @@ class Connection(Base):
                               rooms=[],
                               tests=[])
 
-
-        conn_obj.rooms = [room.from_dict(request_data) for room in self.rooms]
-        conn_obj.tests = [test.from_dict(request_data) for test in self.tests]
+        conn_obj.rooms = [room_obj.from_dict(room) for room in request_data.get("rooms", [])]
+        conn_obj.tests = [test_obj.from_dict(test) for test in request_data.get("tests", [])]
 
         return conn_obj

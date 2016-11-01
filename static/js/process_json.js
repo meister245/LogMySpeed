@@ -33,12 +33,16 @@ function prepareJSON(speedResult) {
     }
 
     var data = {
-        floorNumber: floor_number,
-        roomNumber: room_number,
         connType: connection_type,
-        nickname: nickname,
-        deviceType: device_type,
-        downloadSpeed: speedResult
+        rooms: [{
+            floorNumber: floor_number,
+            roomNumber: room_number
+        }],
+        tests: [{
+            nickname: nickname,
+            deviceType: device_type,
+            downloadSpeed: speedResult
+        }]
     };
 
     sendJSON(data);

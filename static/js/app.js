@@ -20,7 +20,7 @@ function StartTest() {
     // prepareJSON(5.22)
 }
 
-function TestAgain() {
+function ResetTest() {
     $("#testinput").addClass("in").slideDown();
     $("#testresult").removeClass("in").slideUp();
     $("#teststart").slideToggle();
@@ -43,7 +43,7 @@ function ViewResult() {
     if (chosen == 'Ethernet') {
         $("#ethtab").click();
     }
-    TestAgain();
+    ResetTest();
 }
 
 function ValidateFields() {
