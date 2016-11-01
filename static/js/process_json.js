@@ -33,16 +33,12 @@ function prepareJSON(speedResult) {
     }
 
     var data = {
+        floorNumber: floor_number,
+        roomNumber: room_number,
         connType: connection_type,
-        rooms: [{
-            floorNumber: floor_number,
-            roomNumber: room_number
-        }],
-        tests: [{
-            nickname: nickname,
-            deviceType: device_type,
-            downloadSpeed: speedResult
-        }]
+        nickname: nickname,
+        deviceType: device_type,
+        downloadSpeed: speedResult
     };
 
     sendJSON(data);
@@ -71,9 +67,15 @@ function getData(conn_type) {
 
             for (var fn in rooms) {
                 if (rooms[fn].floor_number == 0) {
-                    items.push('<td> földszint </td>');
+                    items.push('<td> ground floor </td>');
+                } else if (rooms[fn].floor_number % 10 == 1) {
+                    items.push('<td>' + rooms[fn].floor_number + 'st floor</td>');
+                } else if (rooms[fn].floor_number % 10 == 2) {
+                    items.push('<td>' + rooms[fn].floor_number + 'nd floor</td>');
+                } else if (rooms[fn].floor_number % 10 == 3) {
+                    items.push('<td>' + rooms[fn].floor_number + 'rd floor</td>');
                 } else {
-                    items.push('<td>' + rooms[fn].floor_number + '. emelet</td>');
+                    items.push('<td>' + rooms[fn].floor_number + 'th floor</td>');
                 }
             }
 
@@ -89,7 +91,7 @@ function getData(conn_type) {
 
             items.push('</td><td>');
             for (var ds in tests) {
-                items.push(tests[ds].download_speed + '<br/>');
+                items.push(tests[ds].download_speed + ' Mbps<br/>');
             }
 
             items.push('</td><td>');

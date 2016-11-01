@@ -16,7 +16,7 @@ function StartTest() {
 
     InitiateSpeedDetection();
 
-    // use for offline testing
+    // use for offline dev
     // prepareJSON(5.22)
 }
 
@@ -37,7 +37,7 @@ function DataPlanWarning() {
 
 function ViewResult() {
     var chosen = $('#connection').find(":selected").text();
-    if (chosen == 'Wi-fi') {
+    if (chosen == 'Wifi') {
         $("#wifitab").click();
     }
     if (chosen == 'Ethernet') {

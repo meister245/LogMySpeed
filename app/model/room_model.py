@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer
+from sqlalchemy.orm import relationship, backref
 
 from base import Base
 
@@ -9,6 +10,8 @@ class Room(Base):
     room_id = Column(Integer, primary_key=True, autoincrement=True)
     room_number = Column(Integer, nullable=False)
     floor_number = Column(Integer, nullable=False)
+
+    # tests = relationship('SpeedTest', backref=backref('room', uselist=True), cascade="save-update")
 
     def to_dict(self):
         room_dict = {c.name: getattr(self, c.name) for c in self.__table__.columns}

@@ -45,7 +45,7 @@
             <!--navigation bar - tabs-->
             <ul class="nav navbar-nav">
                 <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-                <li><a data-toggle="tab" onclick="getData('wifi')" id="wifitab" href="#wifi">Wi-fi</a></li>
+                <li><a data-toggle="tab" onclick="getData('wifi')" id="wifitab" href="#wifi">Wifi</a></li>
                 <li><a data-toggle="tab" onclick="getData('ethernet')" id="ethtab" href="#ethernet">Ethernet</a></li>
                 <li><a data-toggle="tab" href="#about">About</a></li>
             </ul>
@@ -73,7 +73,7 @@
             <div class="jumbotron margin-top-25 fade in" id="testinput">
                 <div class="row">
                     <!--room number input-->
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <div class="col-lg-3">
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-home"></span>
                             <select class="form-control selectpicker" id="rooms" data-size="5"
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     <!--connection type input-->
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <div class="col-lg-3">
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-circle-arrow-down"></span>
                             <select class="form-control selectpicker" id="connection" data-size="5"
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <!--device type input-->
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <div class="col-lg-3">
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-phone"></span>
                             <select class="form-control selectpicker" id="device" onchange="DataPlanWarning()"
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <!--nickname input-->
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <div class="col-lg-3">
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-user"></span>
                             <input type="text" class="form-control selectpicker" id="nickname" data-size="5"

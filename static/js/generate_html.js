@@ -18,7 +18,7 @@ $(document).ready(function()
 
 function initSelectBox(){
     var device = {smartphone: 'Smartphone', tablet: 'Tablet', notebook: 'Notebook', desktop: 'Desktop'};
-    var connection = {wifi: 'Wi-fi', ethernet: 'Ethernet'};
+    var connection = {wifi: 'Wifi', ethernet: 'Ethernet'};
 
     for (num = 1; num <= 103; num++) {
         $("#rooms").append('<option value="' + num + '">' + num + '</option>');

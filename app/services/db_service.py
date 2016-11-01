@@ -25,18 +25,45 @@ class DBService:
             .all()
         return items
 
-    def create_item(self, request_data):
-        try:
-            obj = Connection().from_dict(request_data)
-
-            self.db.add(obj)
-            self.db.commit()
-
-        except Exception as e:
-            raise e
-
-        return
-
     def data_to_json(self, conn_type):
         item_dicts = [item.to_dict() for item in self.get_items(conn_type)]
         return json.dumps(item_dicts)
+
+    def update_item(self, request_data):
+        conn_obj = self.find_or_create_conn(request_data)
+        self.find_or_create_room(conn_obj, request_data)
+        self.add_new_test(conn_obj, request_data)
+        self.db.commit()
+        return
+
+    def find_or_create_conn(self, request_data):
+        conn_id = self.db.query(Connection.conn_id) \
+            .filter(Connection.conn_type == request_data.get('connType')) \
+            .first()
+
+        if not (conn_id):
+            conn_obj = Connection().from_dict(request_data)
+            self.db.add(conn_obj)
+            self.db.commit()
+            return conn_obj
+
+        conn_obj = self.db.query(Connection).get(conn_id)
+        return conn_obj
+
+    def find_or_create_room(self, conn_obj, request_data):
+        room_id = self.db.query(Room.room_id) \
+            .filter(Room.room_number == request_data.get('roomNumber')) \
+            .first()
+
+        if not (room_id):
+            room_obj = Room().from_dict(request_data)
+            conn_obj.rooms.append(room_obj)
+            return conn_obj
+
+        room_obj = self.db.query(Room).get(room_id)
+        conn_obj.rooms.append(room_obj)
+        return conn_obj
+
+    def add_new_test(self, obj, request_data):
+        obj.tests.append(SpeedTest().from_dict(request_data))
+        return obj

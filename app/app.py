@@ -32,7 +32,7 @@ def get_data():
     data = request.get_json()
     app.logger.info(data)
     if len(data) > 0:
-        db_service.create_item(data)
+        db_service.update_item(data)
         return 'New item created, 201 Created'
     else:
         return '400 Bad Request'
@@ -45,4 +45,4 @@ def send_json():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=9000, use_reloader=False)
+    app.run(debug=True, port=9000, use_reloader=True)
