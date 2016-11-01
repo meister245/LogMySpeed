@@ -1,46 +1,48 @@
 from os.path import isfile
-import json
-from string import capitalize
 
 from flask import Flask, request
 
 from services.db_service import DBService
-from utilities.db_tools import DBTools
+from utilities.db_tools import create_tables, drop_tables, generate_items
 
 app = Flask(__name__, static_folder='../static')
 
+# database connection
 conn_param = 'sqlite:///utilities/speedmap.sqlite'
-db_tool = DBTools(conn_param)
-db_service = DBService(db_tool.db)
 
+# class instances
+db_service = DBService(conn_param)
+
+# development
 if conn_param.startswith('sqlite'):
     if isfile(conn_param[9:]) is False:
-        db_tool.drop_tables()
-        db_tool.create_tables()
-        db_tool.generate_items(30)
+        drop_tables(db_service.engine)
+        create_tables(db_service.engine)
+        # generate_items(db_service.db, 30)
 
 
+# flask functions
 @app.route('/')
 def root():
     return app.send_static_file('index.html')
 
 
-@app.route('/testresult', methods=['POST'])
-def get_test_result():
+@app.route('/submit', methods=['POST'])
+def get_data():
     data = request.get_json()
-    db_service.create_item(data)
-    print data
+    app.logger.info(data)
     if len(data) > 0:
-        return 'HTTP 201 Created'
+        db_service.create_item(data)
+        return 'New item created, 201 Created'
     else:
-        return 'HTTP 400 Bad Request'
+        return '400 Bad Request'
 
 
 @app.route('/data', methods=['GET'])
 def send_json():
     conn_type = request.args.get('type').capitalize()
-    return db_tool.data_to_json(conn_type)
+    return db_service.data_to_json(conn_type)
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=9000, use_reloader=True)
+    app.run(debug=True, port=9000, use_reloader=False)

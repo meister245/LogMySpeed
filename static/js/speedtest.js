@@ -2,7 +2,6 @@ var imageAddr = "http://www.kenrockwell.com/contax/images/g2/examples/31120037-5
 var downloadSize = 4995374; //bytes
 
 function InitiateSpeedDetection() {
-    ShowProgressMessage("Loading the image, please wait...");
     window.setTimeout(MeasureConnectionSpeed, 1);
 }
 
@@ -15,7 +14,10 @@ function MeasureConnectionSpeed() {
     };
 
     download.onerror = function (err, msg) {
-        ShowProgressMessage("Invalid image, or error downloading");
+        $("#testinput").waitMe("hide");
+        $("#testerror").addClass('in').slideDown();
+        $("#teststart").slideToggle();
+        exit();
     };
 
     startTime = (new Date()).getTime();
@@ -28,28 +30,9 @@ function MeasureConnectionSpeed() {
         var speedBps = (bitsLoaded / duration).toFixed(2);
         var speedKbps = (speedBps / 1024).toFixed(2);
         var speedMbps = (speedKbps / 1024).toFixed(2);
+        $("#testinput").removeClass("in").slideUp().waitMe("hide");
+        $("#speed").html("<h4>"+speedMbps+" Mb/s, that is: "+(speedMbps/8).toFixed(2)+" MB/s</h4>");
+        $("#testresult").addClass("in").slideDown();
         prepareJSON(speedMbps);
-        ShowProgressMessage([
-            "Your connection speed is:",
-            speedMbps + " Mbps"
-        ]);
-    }
-}
-
-function ShowProgressMessage(msg) {
-    if (console) {
-        if (typeof msg == "string") {
-            console.log(msg);
-        } else {
-            for (var i = 0; i < msg.length; i++) {
-                console.log(msg[i]);
-            }
-        }
-    }
-
-    var oProgress = document.getElementById("progress");
-    if (oProgress) {
-        var actualHTML = (typeof msg == "string") ? msg : msg.join("<br />");
-        oProgress.innerHTML = actualHTML;
     }
 }

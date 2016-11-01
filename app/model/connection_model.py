@@ -15,8 +15,6 @@ class Connection(Base):
                          cascade="save-update")
     tests = relationship('SpeedTest', backref=backref('connection', uselist=True), cascade="save-update")
 
-    order_by = "desc(Address.email)",
-
     def to_dict(self):
         conn_dict = {c.name: getattr(self, c.name) for c in self.__table__.columns}
         conn_dict['rooms'] = [room.to_dict() for room in self.rooms]
@@ -28,6 +26,7 @@ class Connection(Base):
         conn_obj = Connection(conn_type=request_data.get('connType'),
                               rooms=[],
                               tests=[])
+
 
         conn_obj.rooms = [room.from_dict(request_data) for room in self.rooms]
         conn_obj.tests = [test.from_dict(request_data) for test in self.tests]

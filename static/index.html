@@ -11,11 +11,14 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
     <link href="static/css/app.css" rel="stylesheet">
+    <link href="static/plugin/waitMe.min.css" rel="stylesheet">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" defer></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"
+            async></script>
 
+    <script type="text/javascript" src="static/plugin/waitMe.min.js" async></script>
     <script type="application/javascript" src="static/js/process_json.js" async></script>
     <script type="text/javascript" src="static/js/speedtest.js" async></script>
     <script type="text/javascript" src="static/js/generate_html.js" defer></script>
@@ -25,6 +28,7 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
+            <!--navigation bar - mobile version-->
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#navigationbar" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -32,69 +36,106 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            <!--navigation bar - logo-->
             <a class="navbar-brand">
                 <img alt="speedmap-logo" src="static/img/favicon.ico">
             </a>
         </div>
         <div class="collapse navbar-collapse" id="navigationbar">
+            <!--navigation bar - tabs-->
             <ul class="nav navbar-nav">
                 <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-                <li><a data-toggle="tab" onclick="getData('wifi')" href="#wifi">Wi-fi</a></li>
-                <li><a data-toggle="tab" onclick="getData('ethernet')" href="#ethernet">Ethernet</a></li>
+                <li><a data-toggle="tab" onclick="getData('wifi')" id="wifitab" href="#wifi">Wi-fi</a></li>
+                <li><a data-toggle="tab" onclick="getData('ethernet')" id="ethtab" href="#ethernet">Ethernet</a></li>
                 <li><a data-toggle="tab" href="#about">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <button type="button" class="btn navbar-btn btn-primary disabled">Pre-Alpha</button>
+                <button type="button" class="btn navbar-btn btn-primary disabled">Alpha</button>
             </ul>
         </div>
     </div>
 </nav>
 <div class="container">
     <div class="tab-content">
+        <!--home tab content-->
         <div id="home" class="tab-pane fade in active">
+            <!--alerts-->
+            <div id="testerror" class="alert alert-danger text-center fade" style="display: none" role="alert">
+                <p>Error while performing speed test. Check your internet connection.</p>
+            </div>
+            <div id="tes" class="alert alert-success text-center fade" style="display: none" role="alert">
+                <p></p>
+            </div>
             <div id="dataplanwarning" class="alert alert-warning text-center fade" style="display: none" role="alert">
                 <p>Do not use test on <b>mobile data plan</b>! You have been warned.</p>
             </div>
-            <div class="jumbotron margin-top-25" id="speedInput">
+            <!--speedtest input data-->
+            <div class="jumbotron margin-top-25 fade in" id="testinput">
                 <div class="row">
-                    <div class="col-lg-3">
+                    <!--room number input-->
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-home"></span>
                             <select class="form-control selectpicker" id="rooms" data-size="5"
-                                    data-live-search="true"
-                                    title="Room Number"></select>
+                                    data-live-search="true" title="Room Number" required></select>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <!--connection type input-->
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-circle-arrow-down"></span>
                             <select class="form-control selectpicker" id="connection" data-size="5"
-                                    data-live-search="true" title="Connection"></select>
+                                    data-live-search="true" title="Connection" required></select>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <!--device type input-->
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-phone"></span>
-                            <select class="form-control selectpicker" id="device" onchange="DataPlanWarning()" data-size="5"
-                                    data-live-search="true"
-                                    title="Device"></select>
+                            <select class="form-control selectpicker" id="device" onchange="DataPlanWarning()"
+                                    data-size="5" data-live-search="true" title="Device" required></select>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <!--nickname input-->
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-user"></span>
-                            <input type="text" class="form-control selectpicker" id="nickname" data-size="5" data-live-search="true"
+                            <input type="text" class="form-control selectpicker" id="nickname" data-size="5"
+                                   data-live-search="true"
                                    placeholder="Nickname (Optional)">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="text-center margin-top-25">
-                <button type="submit" id="startTest" class="btn btn-lg btn-primary" onclick="StartTest()">Start Test</button>
+            <!--submit button-->
+            <div class="text-center margin-top-25" id="teststart">
+                <button class="btn btn-lg btn-primary" onclick="StartTest()">
+                    Start Test
+                </button>
             </div>
-            <div class="text-center margin-top-25" id="progress"></div>
+            <!--test result-->
+            <div class="text-center margin-top-25 fade" id="testresult">
+                <div>
+                    <h2>Your Download Speed is:</h2>
+                    <div id="speed"></div>
+                </div>
+                <div class="row text-center margin-top-25">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <button id="newtest" class="btn btn-lg btn-primary" onclick="TestAgain()">
+                            Test Again
+                        </button>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <button id="showresult" class="btn btn-lg btn-success" onclick="ViewResult()">
+                            View Results
+                        </button>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"></div>
+                </div>
+            </div>
         </div>
-
+        <!--wifi tab content-->
         <div id="wifi" class="tab-pane fade">
             <div class="table-responsive">
                 <table class="table">
@@ -103,7 +144,7 @@
                 </table>
             </div>
         </div>
-
+        <!--ethernet tab content-->
         <div id="ethernet" class="tab-pane fade">
             <div class="table-responsive">
                 <table class="table">
@@ -112,13 +153,12 @@
                 </table>
             </div>
         </div>
-
+        <!--about tab content-->
         <div id="about" class="tab-pane fade">
             <div>
                 WIP
             </div>
         </div>
-
     </div>
 </div>
 </body>

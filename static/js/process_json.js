@@ -1,4 +1,4 @@
-var floor_number, room_number, connection_type, device_type, nickname, test_date = null;
+var floor_number, room_number, connection_type, device_type, nickname = null;
 
 function prepareJSON(speedResult) {
     room_number = $('#rooms').find(":selected").text();
@@ -45,10 +45,11 @@ function prepareJSON(speedResult) {
 }
 
 function sendJSON(data) {
+    console.log(data);
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: "/testresult",
+        url: "/submit",
         data: JSON.stringify(data),
         dataType: "json"
     });

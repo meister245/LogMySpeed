@@ -1,4 +1,7 @@
-from datetime import datetime, timedelta
+import json
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 from model.connection_model import Connection
 from model.room_model import Room
@@ -6,8 +9,11 @@ from model.speedtest_model import SpeedTest
 
 
 class DBService:
-    def __init__(self, session):
-        self.db = session
+    def __init__(self, conn_param):
+        self.engine = create_engine(conn_param)
+        self.session = sessionmaker(bind=self.engine)
+        self.db = self.session()
+        self.db.execute('PRAGMA foreign_keys = ON;')
 
     def get_items(self, conn_type):
         items = self.db.query(Connection) \
@@ -20,13 +26,10 @@ class DBService:
 
     def create_item(self, request_data):
         obj = Connection().from_dict(request_data)
+        self.db.add(obj)
+        self.db.commit()
+        return
 
-        try:
-            self.db.add(obj)
-            self.db.commit()
-
-        except Exception as e:
-            self.db.rollback()
-            raise e
-
-        return True
+    def data_to_json(self, conn_type):
+        item_dicts = [item.to_dict() for item in self.get_items(conn_type)]
+        return json.dumps(item_dicts)

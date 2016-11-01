@@ -25,6 +25,6 @@ class SpeedTest(Base):
         test_obj = SpeedTest(nickname=request_data.get('nickname', 'N/A'),
                              device_type=request_data.get('deviceType'),
                              download_speed=request_data.get('downloadSpeed'),
-                             test_date=str(datetime.now())[:18])
+                             test_date=datetime.now())
 
         return test_obj

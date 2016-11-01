@@ -11,23 +11,25 @@ $(document).ready(function () {
     }).appendTo(document.getElementsByClassName('header-data'))
 });
 
-$(document).ready(function () {
-    for (i = 1; i <= 103; i++) {
-        $("#rooms").append('<option value="' + i + '">' + i + '</option>');
-    }
+$(document).ready(function()
+{
+    initSelectBox();
 });
 
-$(document).ready(function () {
-    var connection = {wifi: 'Wi-fi', ethernet:'Ethernet'};
-    for (var i in connection) {
-        $("#connection").append('<option value="' + connection[i] + '">' + connection[i] + '</option>');
+function initSelectBox(){
+    var device = {smartphone: 'Smartphone', tablet: 'Tablet', notebook: 'Notebook', desktop: 'Desktop'};
+    var connection = {wifi: 'Wi-fi', ethernet: 'Ethernet'};
+
+    for (num = 1; num <= 103; num++) {
+        $("#rooms").append('<option value="' + num + '">' + num + '</option>');
+    }
+
+    for (var c in connection) {
+        $("#connection").append('<option value="' + connection[c] + '">' + connection[c] + '</option>');
 
     }
-});
 
-$(document).ready(function () {
-    var device = ['Smartphone', 'Tablet', 'Notebook', 'Desktop'];
-    for (var i in device) {
-        $("#device").append('<option value="' + device[i] + '">' + device[i] + '</option>')
+    for (var d in device) {
+        $("#device").append('<option value="' + device[d] + '">' + device[d] + '</option>')
     }
-});
+}
