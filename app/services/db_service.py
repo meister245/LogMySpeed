@@ -31,8 +31,13 @@ class DBService:
 
     def update_item(self, request_data):
         conn_obj = self.find_or_create_conn(request_data)
-        self.find_or_create_room(conn_obj, request_data)
-        self.add_new_test(conn_obj, request_data)
+        room_obj = self.find_or_create_room(request_data)
+        test_obj = self.create_test(request_data)
+
+        conn_obj.rooms.append(room_obj)
+        conn_obj.tests.append(test_obj)
+
+        self.db.add(conn_obj)
         self.db.commit()
         return
 
@@ -41,29 +46,21 @@ class DBService:
             .filter(Connection.conn_type == request_data.get('connType')) \
             .first()
 
-        if not (conn_id):
-            conn_obj = Connection().from_dict(request_data)
-            self.db.add(conn_obj)
-            self.db.commit()
-            return conn_obj
+        if not conn_id:
+            return Connection().from_dict(request_data)
 
-        conn_obj = self.db.query(Connection).get(conn_id)
-        return conn_obj
+        return self.db.query(Connection).get(conn_id)
 
-    def find_or_create_room(self, conn_obj, request_data):
+    def find_or_create_room(self, request_data):
         room_id = self.db.query(Room.room_id) \
             .filter(Room.room_number == request_data.get('roomNumber')) \
             .first()
 
-        if not (room_id):
-            room_obj = Room().from_dict(request_data)
-            conn_obj.rooms.append(room_obj)
-            return conn_obj
+        if not room_id:
+            return Room().from_dict(request_data)
 
-        room_obj = self.db.query(Room).get(room_id)
-        conn_obj.rooms.append(room_obj)
-        return conn_obj
+        return self.db.query(Room).get(room_id)
 
-    def add_new_test(self, obj, request_data):
-        obj.tests.append(SpeedTest().from_dict(request_data))
-        return obj
+    @staticmethod
+    def create_test(request_data):
+        return SpeedTest().from_dict(request_data)

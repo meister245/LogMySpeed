@@ -9,8 +9,6 @@ class SpeedTest(Base):
     __tablename__ = 'speedtest'
 
     test_id = Column(Integer, primary_key=True, autoincrement=True)
-    # room_id = Column(Integer, ForeignKey('room.room_id'), nullable=False)
-    conn_id = Column(Integer, ForeignKey('connection.conn_id'), nullable=False)
     nickname = Column(String(15), nullable=False)
     device_type = Column(String(10), nullable=False)
     download_speed = Column(Float, nullable=False)
