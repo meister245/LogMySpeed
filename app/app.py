@@ -15,10 +15,10 @@ conn_param = 'sqlite:///utilities/speedmap.sqlite'
 db_service = DBService(conn_param)
 
 # development
-# if conn_param.startswith('sqlite'):
-#     if isfile(conn_param[9:]) is False:
-        # drop_tables(db_service.engine)
-        # create_tables(db_service.engine)
+if conn_param.startswith('sqlite'):
+    if isfile(conn_param[9:]) is False:
+        drop_tables(db_service.engine)
+        create_tables(db_service.engine)
         # generate_items(db_service.db, 30)
 
 

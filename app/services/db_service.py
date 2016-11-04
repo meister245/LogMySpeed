@@ -17,8 +17,8 @@ class DBService:
 
     def get_items(self, conn_type):
         items = self.db.query(Association) \
-            .filter(Association.connections.any(Connection.conn_type == conn_type)) \
-            .order_by(Association.rooms.any(Room.room_number), Association.tests.any(SpeedTest.test_date).desc()) \
+            .filter(Association.connections.has(Connection.conn_type == conn_type)) \
+            .order_by(Association.rooms.has(Room.room_number), Association.tests.any(SpeedTest.test_date).desc()) \
             .all()
         return items
 
@@ -27,10 +27,8 @@ class DBService:
         assoc_objects = self.get_items(conn_type)
         for assoc_obj in assoc_objects:
             dict_item = {'tests': []}
-            for conn in assoc_obj.connections:
-                dict_item.update(conn.to_dict())
-            for room in assoc_obj.rooms:
-                dict_item.update(room.to_dict())
+            dict_item.update(assoc_obj.connections.to_dict())
+            dict_item.update(assoc_obj.rooms.to_dict())
             for test in assoc_obj.tests:
                 dict_item['tests'].append(test.to_dict())
             dict_items.append(dict_item)
@@ -40,8 +38,8 @@ class DBService:
         assoc_obj = Association().from_dict()
         self.db.add(assoc_obj)
 
-        assoc_obj.connections.append(self.find_or_create_conn(request_data))
-        assoc_obj.rooms.append(self.find_or_create_room(request_data))
+        assoc_obj.connections = self.find_or_create_conn(request_data)
+        assoc_obj.rooms = self.find_or_create_room(request_data)
         assoc_obj.tests.append(self.create_test(request_data))
 
         self.db.commit()
