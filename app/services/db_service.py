@@ -1,11 +1,10 @@
-import json
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from model.connection_model import Connection
 from model.room_model import Room
 from model.speedtest_model import SpeedTest
+from model.association import Association
 
 
 class DBService:
@@ -17,27 +16,43 @@ class DBService:
             self.db.execute('PRAGMA foreign_keys = ON;')
 
     def get_items(self, conn_type):
-        items = self.db.query(Connection) \
-            .join(Connection.rooms) \
-            .join(Connection.tests) \
-            .filter(Connection.conn_type == conn_type) \
-            .order_by(Room.room_number, SpeedTest.test_date.desc()) \
+        items = self.db.query(Association) \
+            .filter(Association.connections.any(Connection.conn_type == conn_type)) \
+            .order_by(Association.rooms.any(Room.room_number), Association.tests.any(SpeedTest.test_date).desc()) \
             .all()
         return items
 
-    def data_to_json(self, conn_type):
-        item_dicts = [item.to_dict() for item in self.get_items(conn_type)]
-        return json.dumps(item_dicts)
+    def obj_to_dict(self, conn_type):
+        dict_items = []
+        assoc_objects = self.get_items(conn_type)
+        for assoc_obj in assoc_objects:
+            rooms = []
+            tests = []
+            connections = []
+
+            for conn in assoc_obj.connections:
+                connections.append(conn.to_dict())
+            for room in assoc_obj.rooms:
+                rooms.append(room.to_dict())
+            for test in assoc_obj.tests:
+                tests.append(test.to_dict())
+
+            dict_item = []
+            dict_item.append(rooms)
+            dict_item.append(tests)
+            dict_item.append(connections)
+
+            dict_items.append(dict_item)
+        return dict_items
 
     def update_item(self, request_data):
-        conn_obj = self.find_or_create_conn(request_data)
-        room_obj = self.find_or_create_room(request_data)
-        test_obj = self.create_test(request_data)
+        assoc_obj = Association().from_dict()
+        self.db.add(assoc_obj)
 
-        conn_obj.rooms.append(room_obj)
-        conn_obj.tests.append(test_obj)
+        assoc_obj.connections.append(self.find_or_create_conn(request_data))
+        assoc_obj.rooms.append(self.find_or_create_room(request_data))
+        assoc_obj.tests.append(self.create_test(request_data))
 
-        self.db.add(conn_obj)
         self.db.commit()
         return
 
@@ -61,6 +76,5 @@ class DBService:
 
         return self.db.query(Room).get(room_id)
 
-    @staticmethod
-    def create_test(request_data):
+    def create_test(self, request_data):
         return SpeedTest().from_dict(request_data)
