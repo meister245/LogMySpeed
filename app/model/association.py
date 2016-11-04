@@ -1,8 +1,22 @@
-from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy import Column, Integer, ForeignKey
+from sqlalchemy.orm import relationship, backref
 
 from base import Base
 
-association = Table('association', Base.metadata,
-    Column('id_room', Integer, ForeignKey('room.room_id')),
-    Column('id_connection', Integer, ForeignKey('connection.conn_id')),
-    Column('id_test', Integer, ForeignKey('speedtest.test_id')))
+
+class Association(Base):
+    __tablename__ = 'association'
+
+    assoc_id = Column(Integer, primary_key=True, autoincrement=True)
+    room_id = Column(Integer, ForeignKey('room.room_id'))
+    conn_id = Column(Integer, ForeignKey('connection.conn_id'))
+    test_id = Column(Integer, ForeignKey('speedtest.test_id'))
+
+    rooms = relationship('Room', backref=backref('assoc'), uselist=True)
+    connections = relationship('Connection', backref=backref('assoc'), uselist=True)
+    tests = relationship('SpeedTest', backref=backref('assoc'), uselist=True)
+
+    def from_dict(self):
+        return Association(rooms=[],
+                           connections=[],
+                           tests=[])

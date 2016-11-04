@@ -26,22 +26,13 @@ class DBService:
         dict_items = []
         assoc_objects = self.get_items(conn_type)
         for assoc_obj in assoc_objects:
-            rooms = []
-            tests = []
-            connections = []
-
+            dict_item = {'tests': []}
             for conn in assoc_obj.connections:
-                connections.append(conn.to_dict())
+                dict_item.update(conn.to_dict())
             for room in assoc_obj.rooms:
-                rooms.append(room.to_dict())
+                dict_item.update(room.to_dict())
             for test in assoc_obj.tests:
-                tests.append(test.to_dict())
-
-            dict_item = []
-            dict_item.append(rooms)
-            dict_item.append(tests)
-            dict_item.append(connections)
-
+                dict_item['tests'].append(test.to_dict())
             dict_items.append(dict_item)
         return dict_items
 

@@ -11,13 +11,8 @@ class Room(Base):
     floor_number = Column(Integer, nullable=False)
 
     def to_dict(self):
-        room_dict = {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-        return room_dict
-
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     def from_dict(self, request_data):
-        room_obj = Room(room_number=request_data.get('roomNumber'),
-                        floor_number=request_data.get('floorNumber'))
-
-        return room_obj
+        return Room(room_number=request_data.get('roomNumber'),
+                    floor_number=request_data.get('floorNumber'))

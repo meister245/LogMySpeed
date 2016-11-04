@@ -1,4 +1,5 @@
 from os.path import isfile
+import json
 
 from flask import Flask, request
 
@@ -14,10 +15,10 @@ conn_param = 'sqlite:///utilities/speedmap.sqlite'
 db_service = DBService(conn_param)
 
 # development
-if conn_param.startswith('sqlite'):
-    if isfile(conn_param[9:]) is False:
-        drop_tables(db_service.engine)
-        create_tables(db_service.engine)
+# if conn_param.startswith('sqlite'):
+#     if isfile(conn_param[9:]) is False:
+        # drop_tables(db_service.engine)
+        # create_tables(db_service.engine)
         # generate_items(db_service.db, 30)
 
 
@@ -30,7 +31,6 @@ def root():
 @app.route('/submit', methods=['POST'])
 def get_data():
     data = request.get_json()
-    app.logger.info(data)
     if len(data) > 0:
         db_service.update_item(data)
         return 'New item created, 201 Created'
@@ -41,8 +41,10 @@ def get_data():
 @app.route('/data', methods=['GET'])
 def send_json():
     conn_type = request.args.get('type').capitalize()
-    return db_service.data_to_json(conn_type)
+
+    app.logger.info(json.dumps(db_service.obj_to_dict(conn_type)))
+    return json.dumps(db_service.obj_to_dict(conn_type))
 
 
 if __name__ == '__main__':
-    app.run(debug=False, port=9000, use_reloader=False)
+    app.run(debug=True, port=9000, use_reloader=False)

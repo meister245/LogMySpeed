@@ -21,9 +21,7 @@ class SpeedTest(Base):
         return test_dict
 
     def from_dict(self, request_data):
-        test_obj = SpeedTest(nickname=request_data.get('nickname', 'N/A'),
-                             device_type=request_data.get('deviceType'),
-                             download_speed=request_data.get('downloadSpeed'),
-                             test_date=datetime.now())
-
-        return test_obj
+        return SpeedTest(nickname=request_data.get('nickname', 'N/A'),
+                         device_type=request_data.get('deviceType'),
+                         download_speed=request_data.get('downloadSpeed'),
+                         test_date=datetime.now())
