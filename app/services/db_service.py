@@ -17,31 +17,43 @@ class DBService:
 
     def get_items(self, conn_type):
         items = self.db.query(Association) \
-            .filter(Association.connections.has(Connection.conn_type == conn_type)) \
-            .order_by(Association.rooms.has(Room.room_number), Association.tests.any(SpeedTest.test_date).desc()) \
+            .filter(Association.connection.has(Connection.conn_type == conn_type)) \
+            .order_by(Association.room.has(Room.room_number), Association.test.has(SpeedTest.test_date).desc()) \
             .all()
         return items
 
     def obj_to_dict(self, conn_type):
         dict_items = []
-        assoc_objects = self.get_items(conn_type)
-        for assoc_obj in assoc_objects:
-            dict_item = {'tests': []}
-            dict_item.update(assoc_obj.connections.to_dict())
-            dict_item.update(assoc_obj.rooms.to_dict())
-            for test in assoc_obj.tests:
-                dict_item['tests'].append(test.to_dict())
+        for assoc_obj in self.get_items(conn_type):
+            dict_item = {'room': [], 'connection': [], 'tests': []}
+            dict_item['room'].append(assoc_obj.room.to_dict())
+            dict_item['connection'].append(assoc_obj.connection.to_dict())
+            dict_item['tests'].append(assoc_obj.test.to_dict())
+
             dict_items.append(dict_item)
-        return dict_items
+        return self.aggregate_tests(dict_items)
+
+    def aggregate_tests(self, dict_items):
+        aggregated_dict = []
+        count = 0
+        for dict in dict_items:
+            if len(aggregated_dict) == 0:
+                aggregated_dict.append(dict)
+            elif dict['room'] == aggregated_dict[count]['room'] \
+                    and dict['connection'] == aggregated_dict[count]['connection']:
+                aggregated_dict[count]['tests'].append(dict['tests'][0])
+            else:
+                aggregated_dict.append(dict)
+                count += 1
+        return aggregated_dict
 
     def update_item(self, request_data):
-        assoc_obj = Association().from_dict()
+        assoc_obj = Association()
+        assoc_obj.connection = self.find_or_create_conn(request_data)
+        assoc_obj.room = self.find_or_create_room(request_data)
+        assoc_obj.test = self.create_test(request_data)
+
         self.db.add(assoc_obj)
-
-        assoc_obj.connections = self.find_or_create_conn(request_data)
-        assoc_obj.rooms = self.find_or_create_room(request_data)
-        assoc_obj.tests.append(self.create_test(request_data))
-
         self.db.commit()
         return
 

@@ -15,11 +15,11 @@ conn_param = 'sqlite:///utilities/speedmap.sqlite'
 db_service = DBService(conn_param)
 
 # development
-if conn_param.startswith('sqlite'):
-    if isfile(conn_param[9:]) is False:
-        drop_tables(db_service.engine)
-        create_tables(db_service.engine)
-        # generate_items(db_service.db, 30)
+# if conn_param.startswith('sqlite'):
+#     if isfile(conn_param[9:]) is False:
+#         drop_tables(db_service.engine)
+#         create_tables(db_service.engine)
+#         generate_items(db_service.db, 30)
 
 
 # flask functions
@@ -41,8 +41,7 @@ def get_data():
 @app.route('/data', methods=['GET'])
 def send_json():
     conn_type = request.args.get('type').capitalize()
-
-    app.logger.info(json.dumps(db_service.obj_to_dict(conn_type)))
+    app.logger.info(db_service.obj_to_dict(conn_type))
     return json.dumps(db_service.obj_to_dict(conn_type))
 
 

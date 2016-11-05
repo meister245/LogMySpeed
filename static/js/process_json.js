@@ -62,11 +62,11 @@ function getData(conn_type) {
         console.log(data);
         for (var a in data) {
             items.length = 0;
-            var rooms = data[a].rooms;
+            var room = data[a].room;
             var tests = data[a].tests;
 
             for (var fn in rooms) {
-                if (rooms[fn].floor_number == 0) {
+                if (room[fn].floor_number == 0) {
                     items.push('<td> ground floor </td>');
                 } else if (rooms[fn].floor_number % 10 == 1) {
                     items.push('<td>' + rooms[fn].floor_number + 'st floor</td>');
@@ -80,7 +80,7 @@ function getData(conn_type) {
             }
 
             items.push('<td>');
-            for (var rn in rooms) {
+            for (var rn in room) {
                 items.push(rooms[rn].room_number + '<br/>');
             }
 

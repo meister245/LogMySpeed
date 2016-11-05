@@ -12,11 +12,6 @@ class Association(Base):
     conn_id = Column(Integer, ForeignKey('connection.conn_id'))
     test_id = Column(Integer, ForeignKey('speedtest.test_id'))
 
-    rooms = relationship('Room', backref=backref('assoc'), uselist=False)
-    connections = relationship('Connection', backref=backref('assoc'), uselist=False)
-    tests = relationship('SpeedTest', backref=backref('assoc'), uselist=True)
-
-    def from_dict(self):
-        return Association(rooms=None,
-                           connections=None,
-                           tests=[])
+    room = relationship('Room', backref=backref('assoc'))
+    connection = relationship('Connection', backref=backref('assoc'))
+    test = relationship('SpeedTest', backref=backref('assoc'))
