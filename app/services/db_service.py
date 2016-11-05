@@ -41,7 +41,8 @@ class DBService:
                 aggregated_dict.append(dict)
             elif dict['room'] == aggregated_dict[count]['room'] \
                     and dict['connection'] == aggregated_dict[count]['connection']:
-                aggregated_dict[count]['tests'].append(dict['tests'][0])
+                for test_item in dict['tests']:
+                    aggregated_dict[count]['tests'].append(test_item)
             else:
                 aggregated_dict.append(dict)
                 count += 1
