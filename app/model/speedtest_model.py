@@ -12,7 +12,7 @@ class SpeedTest(Base):
     nickname = Column(String(15), nullable=False)
     device_type = Column(String(10), nullable=False)
     download_speed = Column(Float, nullable=False)
-    test_date = Column(Date, nullable=False)
+    test_date = Column(Integer, nullable=False)
 
     def to_dict(self):
         test_dict = {c.name: getattr(self, c.name) for c in self.__table__.columns}

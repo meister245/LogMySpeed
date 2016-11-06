@@ -15,14 +15,12 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" defer></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"
-            async></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js" async></script>
+    <script type="text/javascript" src="static/js/app.js" defer></script>
+    <script type="text/javascript" src="static/js/generate_html.js" defer></script>
     <script type="text/javascript" src="static/plugin/waitMe.min.js" async></script>
     <script type="application/javascript" src="static/js/process_json.js" async></script>
     <script type="text/javascript" src="static/js/speedtest.js" async></script>
-    <script type="text/javascript" src="static/js/generate_html.js" defer></script>
-    <script type="text/javascript" src="static/js/app.js" defer></script>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -50,7 +48,7 @@
                 <li><a data-toggle="tab" href="#about">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <button type="button" class="btn navbar-btn btn-primary disabled">Alpha</button>
+                <button type="button" class="btn navbar-btn btn-primary disabled">Closed Beta</button>
             </ul>
         </div>
     </div>
@@ -61,13 +59,13 @@
         <div id="home" class="tab-pane fade in active">
             <!--alerts-->
             <div id="testerror" class="alert alert-danger text-center fade" style="display: none" role="alert">
-                <p>Error while performing speed test. Check your internet connection.</p>
+                <p><b>Error while performing speed test. Check your internet connection.</b></p>
             </div>
-            <div id="tes" class="alert alert-success text-center fade" style="display: none" role="alert">
-                <p></p>
+            <div id="validatefail" class="alert alert-info text-center fade" style="display: none" role="alert">
+                <p><b>Please fill out all mandatory fields. (room number, connection, device)</b></p>
             </div>
             <div id="dataplanwarning" class="alert alert-warning text-center fade" style="display: none" role="alert">
-                <p>Do not use test on <b>mobile data plan</b>! You have been warned.</p>
+                <p><b>Do not use test on mobile data plan!</b></p>
             </div>
             <!--speedtest input data-->
             <div class="jumbotron margin-top-25 fade in" id="testinput">
@@ -77,7 +75,7 @@
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-home"></span>
                             <select class="form-control selectpicker" id="rooms" data-size="5"
-                                    data-live-search="true" title="Room Number" required></select>
+                                    data-live-search="true" title="Room Number"></select>
                         </div>
                     </div>
                     <!--connection type input-->
@@ -85,7 +83,7 @@
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-circle-arrow-down"></span>
                             <select class="form-control selectpicker" id="connection" data-size="5"
-                                    data-live-search="true" title="Connection" required></select>
+                                    data-live-search="true" title="Connection"></select>
                         </div>
                     </div>
                     <!--device type input-->
@@ -93,7 +91,7 @@
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-phone"></span>
                             <select class="form-control selectpicker" id="device" onchange="DataPlanWarning()"
-                                    data-size="5" data-live-search="true" title="Device" required></select>
+                                    data-size="5" data-live-search="true" title="Device"></select>
                         </div>
                     </div>
                     <!--nickname input-->
@@ -109,7 +107,7 @@
             </div>
             <!--submit button-->
             <div class="text-center margin-top-25" id="teststart">
-                <button class="btn btn-lg btn-primary" onclick="StartTest()">
+                <button class="btn btn-lg btn-primary" onclick="ValidateFields()">
                     Start Test
                 </button>
             </div>

@@ -5,7 +5,7 @@ $(document).ready(function () {
 });
 
 function StartTest() {
-    // ValidateFields();
+    $("#validatefail").removeClass('in').slideUp();
     $("#dataplanwarning").removeClass('in').slideUp();
     $("#testerror").removeClass('in').slideUp();
     $("#testinput").waitMe({
@@ -15,9 +15,6 @@ function StartTest() {
     $("#teststart").slideToggle();
 
     InitiateSpeedDetection();
-
-    // use for offline dev
-    // prepareJSON(5.22)
 }
 
 function ResetTest() {
@@ -29,6 +26,7 @@ function ResetTest() {
 function DataPlanWarning() {
     var chosen = $('#device').find(":selected").text();
     if (chosen == 'Smartphone' || chosen == 'Tablet') {
+        $("#validatefail").removeClass('in').slideUp();
         $("#dataplanwarning").addClass('in').slideDown();
     } else {
         $("#dataplanwarning").removeClass('in').slideUp();
@@ -50,24 +48,10 @@ function ValidateFields() {
     var room = $('#rooms').find(":selected").text();
     var conn = $('#connection').find(":selected").text();
     var device = $('#device').find(":selected").text();
-    var check = false;
 
-    if (room == null || room == '') {
-        document.getElementById('rooms').style.outlineColor = 'red';
-        check = true;
-    }
-
-    if (conn == null || conn == '') {
-        document.getElementById('connection').style.borderColor = 'red';
-        check = true;
-    }
-
-    if (device == null || device == '') {
-        document.getElementById('device').style.borderColor = 'red';
-        check = true;
-    }
-
-    if (check == true) {
-        throw new Error("Missing values!");
+    if (room == 'Room Number' || conn == 'Connection' || device == 'Device') {
+        $("#validatefail").addClass('in').slideDown();
+    } else {
+        StartTest()
     }
 }

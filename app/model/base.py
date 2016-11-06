@@ -17,7 +17,7 @@ class Base(object):
 
     @staticmethod
     def format_date(date_data):
-        return datetime.strftime(date_data, '%Y-%m-%d')
+        return str(date_data)[:-4]
 
 
 Base = declarative_base(cls=Base)
