@@ -4,6 +4,11 @@ $(document).ready(function () {
     }
 });
 
+$(window).ready(function () {
+    $('#loadstatus').delay(1800).fadeOut('slow');
+    $('#preloader').delay(2000).fadeOut('slow');
+});
+
 function StartTest() {
     $("#validatefail").removeClass('in').slideUp();
     $("#dataplanwarning").removeClass('in').slideUp();

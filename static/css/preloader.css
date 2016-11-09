@@ -1,0 +1,49 @@
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #FFF;
+    z-index: 99;
+}
+
+#loadstatus {
+    padding: 0;
+    display: block;
+    margin: auto;
+    margin-top: 50%;
+    max-width: 100%;
+    max-height: 100%;
+    position: relative;
+}
+
+@media screen and (max-width: 2560px) {
+    #loadstatus {
+        margin-top: 10%;
+    }
+}
+
+@media screen and (max-width: 1920px) {
+    #loadstatus {
+        margin-top: 15%;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    #loadstatus {
+        margin-top: 20%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #loadstatus {
+        margin-top: 25%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #loadstatus {
+        margin-top: 50%;
+    }
+}
