@@ -18,31 +18,36 @@ class DBService:
     def get_items(self, conn_type):
         items = self.db.query(Association) \
             .filter(Association.connection.has(Connection.conn_type == conn_type)) \
-            .order_by(Association.room.has(Room.room_number), Association.test.has(SpeedTest.test_date).desc()) \
             .all()
         return items
 
-    def obj_to_dict(self, conn_type):
+    def obj_to_dict(self, conn_type, limit):
         dict_items = []
         for assoc_obj in self.get_items(conn_type):
-            dict_item = {'room': [], 'connection': [], 'tests': []}
-            dict_item['room'].append(assoc_obj.room.to_dict())
-            dict_item['connection'].append(assoc_obj.connection.to_dict())
+            dict_item = {'tests': []}
+            dict_item.update(assoc_obj.room.to_dict())
+            dict_item.update(assoc_obj.connection.to_dict())
             dict_item['tests'].append(assoc_obj.test.to_dict())
 
             dict_items.append(dict_item)
-        return self.aggregate_tests(dict_items)
 
-    def aggregate_tests(self, dict_items):
+        dict_items = self.sort_dict(dict_items)
+        return self.aggregate_tests(dict_items, limit)
+
+    def sort_dict(self, dict_items):
+        return sorted(dict_items, key=lambda d: d.get('room_number'))
+
+    def aggregate_tests(self, dict_items, limit):
         aggregated_dict = []
         count = 0
         for dict in dict_items:
             if len(aggregated_dict) == 0:
                 aggregated_dict.append(dict)
-            elif dict['room'] == aggregated_dict[count]['room'] \
-                    and dict['connection'] == aggregated_dict[count]['connection']:
+            elif dict['room_number'] == aggregated_dict[count]['room_number'] \
+                    and dict['conn_type'] == aggregated_dict[count]['conn_type']:
                 for test_item in dict['tests']:
-                    aggregated_dict[count]['tests'].insert(0, test_item)
+                    if len(aggregated_dict[count]['tests']) < limit: # limit number of results / room
+                        aggregated_dict[count]['tests'].insert(0, test_item) # test results descending by time
             else:
                 aggregated_dict.append(dict)
                 count += 1

@@ -45,7 +45,6 @@ function prepareJSON(speedResult) {
 }
 
 function sendJSON(data) {
-    console.log(data);
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
@@ -62,27 +61,23 @@ function getData(conn_type) {
         console.log(data);
         for (var a in data) {
             items.length = 0;
-            var rooms = data[a].room;
             var tests = data[a].tests;
 
-            for (var fn in rooms) {
-                if (rooms[fn].floor_number == 0) {
-                    items.push('<td> ground floor </td>');
-                } else if (rooms[fn].floor_number % 10 == 1) {
-                    items.push('<td>' + rooms[fn].floor_number + 'st floor</td>');
-                } else if (rooms[fn].floor_number % 10 == 2) {
-                    items.push('<td>' + rooms[fn].floor_number + 'nd floor</td>');
-                } else if (rooms[fn].floor_number % 10 == 3) {
-                    items.push('<td>' + rooms[fn].floor_number + 'rd floor</td>');
-                } else {
-                    items.push('<td>' + rooms[fn].floor_number + 'th floor</td>');
-                }
+            if (data[a].floor_number == 0) {
+                items.push('<td> ground floor </td>');
+            } else if (data[a].floor_number % 10 == 1) {
+                items.push('<td>' + data[a].floor_number + 'st floor</td>');
+            } else if (data[a].floor_number % 10 == 2) {
+                items.push('<td>' + data[a].floor_number + 'nd floor</td>');
+            } else if (data[a].floor_number % 10 == 3) {
+                items.push('<td>' + data[a].floor_number + 'rd floor</td>');
+            } else {
+                items.push('<td>' + data[a].floor_number + 'th floor</td>');
             }
 
+
             items.push('<td>');
-            for (var rn in rooms) {
-                items.push(rooms[rn].room_number + '<br/>');
-            }
+            items.push(data[a].room_number + '<br/>');
 
             items.push('</td><td>');
             for (var dt in tests) {

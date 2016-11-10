@@ -15,10 +15,10 @@ conn_param = 'sqlite:///utilities/speedmap.sqlite'
 db_service = DBService(conn_param)
 
 # db tables
-if conn_param.startswith('sqlite'):
-    if isfile(conn_param[9:]) is False:
-        drop_tables(db_service.engine)
-        create_tables(db_service.engine)
+# if conn_param.startswith('sqlite'):
+#     if isfile(conn_param[9:]) is False:
+#         drop_tables(db_service.engine)
+#         create_tables(db_service.engine)
 
 
 # flask functions
@@ -30,6 +30,8 @@ def root():
 @app.route('/submit', methods=['POST'])
 def get_data():
     data = request.get_json()
+    remote_address = request.remote_addr
+    app.logger.info(data)
     if len(data) > 0:
         db_service.update_item(data)
         return 'New item created, 201 Created'
@@ -40,7 +42,7 @@ def get_data():
 @app.route('/data', methods=['GET'])
 def send_json():
     conn_type = request.args.get('type').capitalize()
-    return json.dumps(db_service.obj_to_dict(conn_type))
+    return json.dumps(db_service.obj_to_dict(conn_type, 5))
 
 
 if __name__ == '__main__':

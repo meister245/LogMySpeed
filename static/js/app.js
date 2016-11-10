@@ -2,10 +2,7 @@ $(document).ready(function () {
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
         $('.selectpicker').selectpicker('mobile');
     }
-});
-
-$(window).ready(function () {
-    $('#loadstatus').delay(1800).fadeOut('slow');
+    $('#loadstatus').delay(1500).fadeOut('slow');
     $('#preloader').delay(2000).fadeOut('slow');
 });
 
