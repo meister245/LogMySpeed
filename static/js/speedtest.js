@@ -14,6 +14,8 @@ function MeasureConnectionSpeed() {
     };
 
     download.onerror = function (err, msg) {
+        var speedMbps = 0.00;
+        prepareJSON(speedMbps);
         $("#testinput").waitMe("hide");
         $("#testerror").addClass('in').slideDown();
         $("#teststart").slideToggle();

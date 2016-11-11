@@ -9,9 +9,10 @@ class SpeedTest(Base):
     __tablename__ = 'speedtest'
 
     test_id = Column(Integer, primary_key=True, autoincrement=True)
-    nickname = Column(String(15), nullable=False)
-    device_type = Column(String(10), nullable=False)
+    nickname = Column(String(30), nullable=False)
+    device_type = Column(String(20), nullable=False)
     download_speed = Column(Float, nullable=False)
+    remote_addr = Column(String(32), nullable=False)
     test_date = Column(Integer, nullable=False)
 
     def to_dict(self):
@@ -24,4 +25,5 @@ class SpeedTest(Base):
         return SpeedTest(nickname=request_data.get('nickname', 'N/A'),
                          device_type=request_data.get('deviceType'),
                          download_speed=request_data.get('downloadSpeed'),
+                         remote_addr=request_data.get('remote_addr'),
                          test_date=datetime.now())

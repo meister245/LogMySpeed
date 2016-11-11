@@ -56,53 +56,63 @@ function sendJSON(data) {
 
 function getData(conn_type) {
     $.getJSON('/data?type=' + conn_type, function (data) {
-        $('#' + conn_type + '-data').empty();
-        var items = [];
-        console.log(data);
-        for (var a in data) {
-            items.length = 0;
-            var tests = data[a].tests;
+            $('#' + conn_type + '-data').empty();
+            var items = [];
+            console.log(data);
+            for (var a in data) {
+                items.length = 0;
+                var tests = data[a].tests;
 
-            if (data[a].floor_number == 0) {
-                items.push('<td> ground floor </td>');
-            } else if (data[a].floor_number % 10 == 1) {
-                items.push('<td>' + data[a].floor_number + 'st floor</td>');
-            } else if (data[a].floor_number % 10 == 2) {
-                items.push('<td>' + data[a].floor_number + 'nd floor</td>');
-            } else if (data[a].floor_number % 10 == 3) {
-                items.push('<td>' + data[a].floor_number + 'rd floor</td>');
-            } else {
-                items.push('<td>' + data[a].floor_number + 'th floor</td>');
+                if (data[a].floor_number == 0) {
+                    items.push('<td> ground floor </td>');
+                } else if (data[a].floor_number % 10 == 1) {
+                    items.push('<td>' + data[a].floor_number + 'st floor</td>');
+                } else if (data[a].floor_number % 10 == 2) {
+                    items.push('<td>' + data[a].floor_number + 'nd floor</td>');
+                } else if (data[a].floor_number % 10 == 3) {
+                    items.push('<td>' + data[a].floor_number + 'rd floor</td>');
+                } else {
+                    items.push('<td>' + data[a].floor_number + 'th floor</td>');
+                }
+
+
+                items.push('<td>');
+                items.push(data[a].room_number + '<br/>');
+
+                items.push('</td><td>');
+                for (var dt in tests) {
+                    items.push(tests[dt].device_type + '<br/>');
+                }
+
+                items.push('</td><td>');
+                for (var ds in tests) {
+                    if (tests[ds].download_speed == 0.00) {
+                        items.push('<span style="color: red">Connection Error</span><br/>')
+                    } else {
+                        items.push(tests[ds].download_speed + ' Mbps<br/>');
+                    }
+                }
+
+                items.push('</td><td>');
+                for (var ra in tests) {
+                    items.push(tests[ra].remote_addr + '<br/>');
+                }
+
+                items.push('</td><td>');
+                for (var n in tests) {
+                    items.push(tests[n].nickname + '<br/>');
+                }
+
+                items.push('</td><td>');
+                for (var td in tests) {
+                    items.push(tests[td].test_date + '<br/>');
+                }
+
+                items.push('</td>');
+                $('<tr/>', {
+                    html: items.join('')
+                }).appendTo(document.getElementById(conn_type + '-data'))
             }
-
-
-            items.push('<td>');
-            items.push(data[a].room_number + '<br/>');
-
-            items.push('</td><td>');
-            for (var dt in tests) {
-                items.push(tests[dt].device_type + '<br/>');
-            }
-
-            items.push('</td><td>');
-            for (var ds in tests) {
-                items.push(tests[ds].download_speed + ' Mbps<br/>');
-            }
-
-            items.push('</td><td>');
-            for (var n in tests) {
-                items.push(tests[n].nickname + '<br/>');
-            }
-
-            items.push('</td><td>');
-            for (var td in tests) {
-                items.push(tests[td].test_date + '<br/>');
-            }
-
-            items.push('</td>');
-            $('<tr/>', {
-                html: items.join('')
-            }).appendTo(document.getElementById(conn_type + '-data'))
         }
-    });
+    )
 }

@@ -14,7 +14,7 @@ conn_param = 'sqlite:///utilities/speedmap.sqlite'
 # class instances
 db_service = DBService(conn_param)
 
-# db tables
+# # db tables
 # if conn_param.startswith('sqlite'):
 #     if isfile(conn_param[9:]) is False:
 #         drop_tables(db_service.engine)
@@ -30,8 +30,7 @@ def root():
 @app.route('/submit', methods=['POST'])
 def get_data():
     data = request.get_json()
-    remote_address = request.remote_addr
-    app.logger.info(data)
+    data['remote_addr'] = request.remote_addr
     if len(data) > 0:
         db_service.update_item(data)
         return 'New item created, 201 Created'

@@ -11,7 +11,7 @@ function StartTest() {
     $("#dataplanwarning").removeClass('in').slideUp();
     $("#testerror").removeClass('in').slideUp();
     $("#testinput").waitMe({
-        text: 'Test in progress, please wait...',
+        text: 'Test in progress, please wait.',
         effect: 'bounce'
     });
     $("#teststart").slideToggle();
