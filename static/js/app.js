@@ -9,7 +9,9 @@ $(document).ready(function () {
 function StartTest() {
     $("#validatefail").removeClass('in').slideUp();
     $("#dataplanwarning").removeClass('in').slideUp();
+    $("#validatelength").removeClass('in').slideUp();
     $("#testerror").removeClass('in').slideUp();
+    
     $("#testinput").waitMe({
         text: 'Test in progress, please wait.',
         effect: 'bounce'
@@ -50,9 +52,12 @@ function ValidateFields() {
     var room = $('#rooms').find(":selected").text();
     var conn = $('#connection').find(":selected").text();
     var device = $('#device').find(":selected").text();
+    var nickname = $('#nickname').val();
 
     if (room == 'Room Number' || conn == 'Connection' || device == 'Device') {
         $("#validatefail").addClass('in').slideDown();
+    } else if (nickname.length > 15) {
+        $("#validatelength").addClass('in').slideDown();
     } else {
         StartTest()
     }

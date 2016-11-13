@@ -10,13 +10,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Galada|Overlock" rel="stylesheet">
     <link href="static/css/app.css" rel="stylesheet">
     <link href="static/css/preloader.css" rel="stylesheet">
     <link href="static/plugin/waitMe.min.css" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" defer></script>
     <script type="text/javascript" src="static/js/generate_html.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"
+            defer></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" defer></script>
     <script type="text/javascript" src="static/js/app.js" defer></script>
     <script type="text/javascript" src="static/plugin/waitMe.min.js" async></script>
@@ -62,15 +64,24 @@
     <div class="tab-content">
         <!--home tab content-->
         <div id="home" class="tab-pane fade in active">
+            <!--intro-->
+            <div class="text-center" style="font-family: 'Galada', cursive">
+                <h1>LogMySpeed</h1>
+            </div>
             <!--alerts-->
-            <div id="testerror" class="alert alert-danger text-center fade" style="display: none" role="alert">
-                <p><b>Error while performing speed test.</b> Check your internet connection, this error has been logged.</p>
+            <div id="testerror" class="alert alert-danger text-center fade margin-top-25" style="display: none" role="alert">
+                <p><b>Error while performing speed test.</b><br/>Check your internet connection, this error has been
+                    logged.</p>
             </div>
-            <div id="validatefail" class="alert alert-info text-center fade" style="display: none" role="alert">
-                <p><b>Please fill out all mandatory fields.</b></p>
+            <div id="validatefail" class="alert alert-info text-center fade margin-top-25" style="display: none" role="alert">
+                <p>Please fill out all <b>mandatory fields.</b></p>
             </div>
-            <div id="dataplanwarning" class="alert alert-warning text-center fade" style="display: none" role="alert">
-                <p>Do not use test on <b>mobile data plan</b>, to avoid reaching your limit and / or any overdraft fees!</p>
+            <div id="validatelength" class="alert alert-info text-center fade margin-top-25" style="display: none" role="alert">
+                <p>Nickname can only be 15 characters long.</p>
+            </div>
+            <div id="dataplanwarning" class="alert alert-warning text-center fade margin-top-25" style="display: none" role="alert">
+                <p>Do not use test on <b>mobile data plan</b>, to avoid reaching your limit and / or any overdraft fees!
+                </p>
             </div>
             <!--speedtest input data-->
             <div class="jumbotron margin-top-25 fade in" id="testinput">
@@ -111,6 +122,9 @@
                 </div>
             </div>
             <!--submit button-->
+            <div class="text-center margin-top-25 fade" style="display: none" id="errorwait">
+                <p>Please wait 60 seconds before attempting another speed test</p>
+            </div>
             <div class="text-center margin-top-25" id="teststart">
                 <button class="btn btn-lg btn-primary" onclick="ValidateFields()">
                     Start Test

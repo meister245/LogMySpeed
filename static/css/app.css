@@ -19,3 +19,7 @@
 .margin-bottom-10 .btn {
     margin-bottom:10px;
 }
+
+body {
+    font-family: 'Overlock', 'cursive';
+}

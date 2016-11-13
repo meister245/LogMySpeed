@@ -46,8 +46,9 @@ class DBService:
             elif dict['room_number'] == aggregated_dict[count]['room_number'] \
                     and dict['conn_type'] == aggregated_dict[count]['conn_type']:
                 for test_item in dict['tests']:
-                    if len(aggregated_dict[count]['tests']) < limit: # limit number of results / room
-                        aggregated_dict[count]['tests'].insert(0, test_item) # test results descending by time
+                    if len(aggregated_dict[count]['tests']) == limit: # limit number of results / room
+                        del aggregated_dict[count]['tests'][-1]
+                    aggregated_dict[count]['tests'].insert(0, test_item) # descending order
             else:
                 aggregated_dict.append(dict)
                 count += 1

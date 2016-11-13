@@ -22,8 +22,14 @@ class SpeedTest(Base):
         return test_dict
 
     def from_dict(self, request_data):
-        return SpeedTest(nickname=request_data.get('nickname', 'N/A'),
+        return SpeedTest(nickname=self.default_nickname(request_data),
                          device_type=request_data.get('deviceType'),
                          download_speed=request_data.get('downloadSpeed'),
                          remote_addr=request_data.get('remote_addr'),
                          test_date=datetime.now())
+
+    def default_nickname(self, request_data):
+        if len(request_data.get('nickname')) == 0:
+            return 'N/A'
+        else:
+            return request_data.get('nickname')

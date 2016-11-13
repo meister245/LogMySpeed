@@ -18,8 +18,8 @@ function MeasureConnectionSpeed() {
         prepareJSON(speedMbps);
         $("#testinput").waitMe("hide");
         $("#testerror").addClass('in').slideDown();
-        $("#teststart").slideToggle();
-        exit();
+        $("#errorwait").addClass('in').slideDown();
+        $("#teststart").delay(60000).slideToggle();
     };
 
     startTime = (new Date()).getTime();
