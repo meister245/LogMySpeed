@@ -45,4 +45,4 @@ def send_json():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=9000, use_reloader=False)
+    app.run(host='10.9.9.22', debug=False, port=9000, use_reloader=False)
