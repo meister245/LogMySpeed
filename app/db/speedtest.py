@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, Float, String, Date, ForeignKey
+from sqlalchemy import Column, Integer, Float, String
 
-from base import Base
+from ..db.base import Base
 
 
 class SpeedTest(Base):
@@ -21,15 +21,8 @@ class SpeedTest(Base):
 
         return test_dict
 
-    def from_dict(self, request_data):
-        return SpeedTest(nickname=self.default_nickname(request_data),
-                         device_type=request_data.get('deviceType'),
-                         download_speed=request_data.get('downloadSpeed'),
-                         remote_addr=request_data.get('remote_addr'),
+    @staticmethod
+    def from_dict(**kwargs):
+        return SpeedTest(nickname=kwargs.get('nickname', 'N/A'), device_type=kwargs.get('deviceType'),
+                         download_speed=kwargs.get('downloadSpeed'), remote_addr=kwargs.get('remote_addr'),
                          test_date=datetime.now())
-
-    def default_nickname(self, request_data):
-        if len(request_data.get('nickname')) == 0:
-            return 'N/A'
-        else:
-            return request_data.get('nickname')

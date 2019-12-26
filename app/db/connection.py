@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String
 
-from base import Base
+from ..db.base import Base
 
 
 class Connection(Base):
@@ -12,5 +12,6 @@ class Connection(Base):
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-    def from_dict(self, request_data):
-        return Connection(conn_type=request_data.get('connType'))
+    @staticmethod
+    def from_dict(**kwargs):
+        return Connection(conn_type=kwargs.get('connType'))

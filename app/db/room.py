@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer
 
-from base import Base
+from ..db.base import Base
 
 
 class Room(Base):
@@ -13,6 +13,6 @@ class Room(Base):
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-    def from_dict(self, request_data):
-        return Room(room_number=request_data.get('roomNumber'),
-                    floor_number=request_data.get('floorNumber'))
+    @staticmethod
+    def from_dict(**kwargs):
+        return Room(room_number=kwargs.get('roomNumber'), floor_number=kwargs.get('floorNumber'))
