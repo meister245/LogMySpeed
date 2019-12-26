@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+
+import sys
+import socket
+import argparse
+from os.path import realpath, dirname, join
+
+ROOT_DIR = realpath(join(dirname(__file__), '..'))
+sys.path.append(ROOT_DIR)
+
+from app.webserver import flask_app
+
+
+def main():
+    args = parse_args()
+    flask_app.run(host=args.ip, port=args.port, debug=False, use_reloader=False)
+
+
+def get_host_ip():
+    return socket.gethostbyname(socket.gethostname())
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--ip', action='store', type=str, default=get_host_ip(),
+                        metavar='IP_ADDR', help='IP address')
+    parser.add_argument('-p', '--port', action='store', type=int, default=9000,
+                        metavar='PORT', help='port number')
+
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+    main()
