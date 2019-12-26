@@ -7,22 +7,23 @@
 
     <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="static/img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Galada|Overlock" rel="stylesheet">
-    <link href="static/css/app.css" rel="stylesheet">
-    <link href="static/css/preloader.css" rel="stylesheet">
-    <link href="static/plugin/waitMe.min.css" rel="stylesheet">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" defer></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.9/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Galada|Overlock">
+    <link rel="stylesheet" href="static/3rd/waitMe.min.css">
+
+    <link rel="stylesheet" href="static/css/app.css">
+    <link rel="stylesheet" href="static/css/preloader.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.9/js/bootstrap-select.min.js" defer></script>
+    <script type="text/javascript" src="static/3rd/waitMe.min.js" async></script>
+
     <script type="text/javascript" src="static/js/generate_html.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"
-            defer></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" defer></script>
     <script type="text/javascript" src="static/js/app.js" defer></script>
-    <script type="text/javascript" src="static/plugin/waitMe.min.js" async></script>
-    <script type="application/javascript" src="static/js/process_json.js" async></script>
+    <script type="text/javascript" src="static/js/requests.js" async></script>
     <script type="text/javascript" src="static/js/speedtest.js" async></script>
 </head>
 <body>
@@ -52,10 +53,11 @@
                 <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
                 <li><a data-toggle="tab" onclick="getData('wifi')" id="wifitab" href="#wifi">Wifi</a></li>
                 <li><a data-toggle="tab" onclick="getData('ethernet')" id="ethtab" href="#ethernet">Ethernet</a></li>
-                <li><a data-toggle="tab" href="#about">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <button type="button" class="btn navbar-btn btn-primary disabled">Open Beta</button>
+                <button type="button" class="btn navbar-btn btn-primary"
+                        onclick="window.location.href = 'https://github.com/meister245/logmyspeed';">Follow on Github
+                </button>
             </ul>
         </div>
     </div>
@@ -69,19 +71,18 @@
                 <h1>LogMySpeed</h1>
             </div>
             <!--alerts-->
-            <div id="testerror" class="alert alert-danger text-center fade margin-top-25" style="display: none" role="alert">
+            <div id="testerror" class="alert alert-danger text-center fade margin-top-25" style="display: none"
+                 role="alert">
                 <p><b>Error while performing speed test.</b><br/>Check your internet connection, this error has been
                     logged.</p>
             </div>
-            <div id="validatefail" class="alert alert-info text-center fade margin-top-25" style="display: none" role="alert">
+            <div id="validatefail" class="alert alert-info text-center fade margin-top-25" style="display: none"
+                 role="alert">
                 <p>Please fill out all <b>mandatory fields.</b></p>
             </div>
-            <div id="validatelength" class="alert alert-info text-center fade margin-top-25" style="display: none" role="alert">
+            <div id="validatelength" class="alert alert-info text-center fade margin-top-25" style="display: none"
+                 role="alert">
                 <p>Nickname can only be 15 characters long.</p>
-            </div>
-            <div id="dataplanwarning" class="alert alert-warning text-center fade margin-top-25" style="display: none" role="alert">
-                <p>Do not use test on <b>mobile data plan</b>, to avoid reaching your limit and / or any overdraft fees!
-                </p>
             </div>
             <!--speedtest input data-->
             <div class="jumbotron margin-top-25 fade in" id="testinput">
@@ -106,7 +107,7 @@
                     <div class="col-lg-3 margin-bottom-10">
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-phone"></span>
-                            <select class="form-control selectpicker" id="device" onchange="DataPlanWarning()"
+                            <select class="form-control selectpicker" id="device"
                                     data-size="5" data-live-search="true" title="Device"></select>
                         </div>
                     </div>
@@ -126,7 +127,7 @@
                 <p>Please wait 60 seconds before attempting another speed test</p>
             </div>
             <div class="text-center margin-top-25" id="teststart">
-                <button class="btn btn-lg btn-primary" onclick="ValidateFields()">
+                <button class="btn btn-lg btn-primary" onclick="validateFields()">
                     Start Test
                 </button>
             </div>
@@ -139,12 +140,12 @@
                 <div class="row text-center margin-top-25">
                     <div class="col-lg-3"></div>
                     <div class="col-lg-3 margin-bottom-10">
-                        <button id="newtest" class="btn btn-lg btn-primary" onclick="ResetTest()">
+                        <button id="newtest" class="btn btn-lg btn-primary" onclick="resetTest()">
                             Test Again
                         </button>
                     </div>
                     <div class="col-lg-3 margin-bottom-10">
-                        <button id="showresult" class="btn btn-lg btn-success" onclick="ViewResult()">
+                        <button id="showresult" class="btn btn-lg btn-success" onclick="viewResult()">
                             View Results
                         </button>
                     </div>
@@ -168,13 +169,6 @@
                     <thead class="header-data"></thead>
                     <tbody id="ethernet-data"></tbody>
                 </table>
-            </div>
-        </div>
-        <!--about tab content-->
-        <div id="about" class="tab-pane fade">
-            <div>
-                <p><b>Follow the project on Github</b></p>
-                <p><a href="https://github.com/meister245/LogMySpeed">https://github.com/meister245/LogMySpeed</a></p>
             </div>
         </div>
     </div>

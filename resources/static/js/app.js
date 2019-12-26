@@ -6,7 +6,7 @@ $(document).ready(function () {
     $('#preloader').delay(2000).fadeOut('slow');
 });
 
-function StartTest() {
+function startTest() {
     $("#validatefail").removeClass('in').slideUp();
     $("#dataplanwarning").removeClass('in').slideUp();
     $("#validatelength").removeClass('in').slideUp();
@@ -18,37 +18,28 @@ function StartTest() {
     });
     $("#teststart").slideToggle();
 
-    InitiateSpeedDetection();
+    initiateSpeedDetection();
 }
 
-function ResetTest() {
+function resetTest() {
     $("#testinput").addClass("in").slideDown();
     $("#testresult").removeClass("in").slideUp();
     $("#teststart").slideToggle();
 }
 
-function DataPlanWarning() {
-    var chosen = $('#device').find(":selected").text();
-    if (chosen == 'Smartphone' || chosen == 'Tablet') {
-        $("#validatefail").removeClass('in').slideUp();
-        $("#dataplanwarning").addClass('in').slideDown();
-    } else {
-        $("#dataplanwarning").removeClass('in').slideUp();
-    }
-}
-
-function ViewResult() {
+function viewResult() {
     var chosen = $('#connection').find(":selected").text();
+
     if (chosen == 'Wifi') {
         $("#wifitab").click();
-    }
-    if (chosen == 'Ethernet') {
+    } else if (chosen == 'Ethernet') {
         $("#ethtab").click();
     }
-    ResetTest();
+
+    resetTest();
 }
 
-function ValidateFields() {
+function validateFields() {
     var room = $('#rooms').find(":selected").text();
     var conn = $('#connection').find(":selected").text();
     var device = $('#device').find(":selected").text();
@@ -59,6 +50,6 @@ function ValidateFields() {
     } else if (nickname.length > 15) {
         $("#validatelength").addClass('in').slideDown();
     } else {
-        StartTest()
+        startTest()
     }
 }

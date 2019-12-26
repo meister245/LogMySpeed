@@ -1,6 +1,6 @@
 var floor_number, room_number, connection_type, device_type, nickname = null;
 
-function prepareJSON(speedResult) {
+function sendResult(speedResult) {
     room_number = $('#rooms').find(":selected").text();
     connection_type = $('#connection').find(":selected").text();
     device_type = $('#device').find(":selected").text();
@@ -32,7 +32,7 @@ function prepareJSON(speedResult) {
             floor_number = 7;
     }
 
-    var data = {
+   var data = {
         floorNumber: floor_number,
         roomNumber: room_number,
         connType: connection_type,
@@ -41,26 +41,26 @@ function prepareJSON(speedResult) {
         downloadSpeed: speedResult
     };
 
-    sendJSON(data);
-}
-
-function sendJSON(data) {
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: "/submit",
+        url: "/api/data",
         data: JSON.stringify(data),
         dataType: "json"
     });
 }
 
 function getData(conn_type) {
-    $.getJSON('/data?type=' + conn_type, function (data) {
+    var items = [];
+
+    $.getJSON('/api/data?type=' + conn_type, function (data) {
             $('#' + conn_type + '-data').empty();
-            var items = [];
+
             console.log(data);
+
             for (var a in data) {
                 items.length = 0;
+
                 var tests = data[a].tests;
 
                 if (data[a].floor_number == 0) {
@@ -74,7 +74,6 @@ function getData(conn_type) {
                 } else {
                     items.push('<td>' + data[a].floor_number + 'th floor</td>');
                 }
-
 
                 items.push('<td>');
                 items.push(data[a].room_number + '<br/>');
@@ -109,6 +108,7 @@ function getData(conn_type) {
                 }
 
                 items.push('</td>');
+
                 $('<tr/>', {
                     html: items.join('')
                 }).appendTo(document.getElementById(conn_type + '-data'))

@@ -1,11 +1,11 @@
 var imageAddr = "http://www.kenrockwell.com/contax/images/g2/examples/31120037-5mb.jpg";
 var downloadSize = 4995374; //bytes
 
-function InitiateSpeedDetection() {
+function initiateSpeedDetection() {
     window.setTimeout(MeasureConnectionSpeed, 1);
 }
 
-function MeasureConnectionSpeed() {
+function measureConnectionSpeed() {
     var startTime, endTime;
     var download = new Image();
     download.onload = function () {
