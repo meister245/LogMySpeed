@@ -1,53 +1,55 @@
-var floor_number, room_number, connection_type, device_type, nickname = null;
+var floorNumber, roomNumber, connectionType, deviceType, nickName = null;
 
 function sendResult(speedResult) {
-    room_number = $('#rooms').find(":selected").text();
-    connection_type = $('#connection').find(":selected").text();
-    device_type = $('#device').find(":selected").text();
-    nickname = $('#nickname').val();
+    roomNumber = $('#rooms').find(":selected").text();
+    connectionType = $('#connection').find(":selected").text();
+    deviceType = $('#device').find(":selected").text();
+    nickName = $('#nickname').val();
 
     switch (true) {
-        case room_number <= 14:
-            floor_number = 0;
+        case roomNumber <= 14:
+            floorNumber = 0;
             break;
-        case room_number <= 31:
-            floor_number = 1;
+        case roomNumber <= 31:
+            floorNumber = 1;
             break;
-        case room_number <= 48:
-            floor_number = 2;
+        case roomNumber <= 48:
+            floorNumber = 2;
             break;
-        case room_number <= 59:
-            floor_number = 3;
+        case roomNumber <= 59:
+            floorNumber = 3;
             break;
-        case room_number <= 70:
-            floor_number = 4;
+        case roomNumber <= 70:
+            floorNumber = 4;
             break;
-        case room_number <= 81:
-            floor_number = 5;
+        case roomNumber <= 81:
+            floorNumber = 5;
             break;
-        case room_number <= 92:
-            floor_number = 6;
+        case roomNumber <= 92:
+            floorNumber = 6;
             break;
         default:
-            floor_number = 7;
+            floorNumber = 7;
     }
 
    var data = {
-        floorNumber: floor_number,
-        roomNumber: room_number,
-        connType: connection_type,
-        nickname: nickname,
-        deviceType: device_type,
+        floorNumber: floorNumber,
+        roomNumber: roomNumber,
+        connType: connectionType,
+        nickname: nickName,
+        deviceType: deviceType,
         downloadSpeed: speedResult
     };
 
-    $.ajax({
+   console.log(data);
+
+   $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
         url: "/api/data",
         data: JSON.stringify(data),
         dataType: "json"
-    });
+   });
 }
 
 function getData(conn_type) {

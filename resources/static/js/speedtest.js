@@ -1,8 +1,8 @@
-var imageAddr = "http://www.kenrockwell.com/contax/images/g2/examples/31120037-5mb.jpg";
-var downloadSize = 4995374; //bytes
+var imageAddr = "http://wallpaperswide.com/download/shadow_of_the_tomb_raider_2018_puzzle_video_game-wallpaper-7680x4800.jpg" + "?n=" + Math.random();
+var downloadSize = 5616998; //5.36Mb
 
 function initiateSpeedDetection() {
-    window.setTimeout(MeasureConnectionSpeed, 1);
+    window.setTimeout(measureConnectionSpeed, 1);
 }
 
 function measureConnectionSpeed() {
@@ -15,7 +15,7 @@ function measureConnectionSpeed() {
 
     download.onerror = function (err, msg) {
         var speedMbps = 0.00;
-        prepareJSON(speedMbps);
+        sendResult(speedMbps);
         $("#testinput").waitMe("hide");
         $("#testerror").addClass('in').slideDown();
         $("#errorwait").addClass('in').slideDown();
@@ -35,6 +35,6 @@ function measureConnectionSpeed() {
         $("#testinput").removeClass("in").slideUp().waitMe("hide");
         $("#speed").html("<h4>"+speedMbps+" Mb/s, that is: "+(speedMbps/8).toFixed(2)+" MB/s</h4>");
         $("#testresult").addClass("in").slideDown();
-        prepareJSON(speedMbps);
+        sendResult(speedMbps);
     }
 }

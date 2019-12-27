@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="static/img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -19,9 +18,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.9/js/bootstrap-select.min.js" defer></script>
-    <script type="text/javascript" src="static/3rd/waitMe.min.js" async></script>
+    <script type="text/javascript" src="static/3rd/waitMe.min.js" defer></script>
 
-    <script type="text/javascript" src="static/js/generate_html.js" defer></script>
     <script type="text/javascript" src="static/js/app.js" defer></script>
     <script type="text/javascript" src="static/js/requests.js" async></script>
     <script type="text/javascript" src="static/js/speedtest.js" async></script>
@@ -73,8 +71,7 @@
             <!--alerts-->
             <div id="testerror" class="alert alert-danger text-center fade margin-top-25" style="display: none"
                  role="alert">
-                <p><b>Error while performing speed test.</b><br/>Check your internet connection, this error has been
-                    logged.</p>
+                <p><b>Error while performing speed test.</b></p>
             </div>
             <div id="validatefail" class="alert alert-info text-center fade margin-top-25" style="display: none"
                  role="alert">
@@ -127,7 +124,7 @@
                 <p>Please wait 60 seconds before attempting another speed test</p>
             </div>
             <div class="text-center margin-top-25" id="teststart">
-                <button class="btn btn-lg btn-primary" onclick="validateFields()">
+                <button class="btn btn-lg btn-primary">
                     Start Test
                 </button>
             </div>
@@ -140,12 +137,12 @@
                 <div class="row text-center margin-top-25">
                     <div class="col-lg-3"></div>
                     <div class="col-lg-3 margin-bottom-10">
-                        <button id="newtest" class="btn btn-lg btn-primary" onclick="resetTest()">
+                        <button id="newtest" class="btn btn-lg btn-primary">
                             Test Again
                         </button>
                     </div>
                     <div class="col-lg-3 margin-bottom-10">
-                        <button id="showresult" class="btn btn-lg btn-success" onclick="viewResult()">
+                        <button id="showresult" class="btn btn-lg btn-success">
                             View Results
                         </button>
                     </div>
