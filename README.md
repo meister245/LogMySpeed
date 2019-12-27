@@ -1,10 +1,10 @@
 logmyspeed
 ----------
 
-![](https://i.imgur.com/eaOVISN.png "Log My Speed")
-
 Visualize and troubleshoot internet connectivity and bandwidth issues for users sharing the same LAN.
 Designed for small communities on local networks to report connection issues.
+
+![](https://i.imgur.com/eaOVISN.png "Log My Speed")
 
 #### Story
 
@@ -19,13 +19,9 @@ can provide actually meaningful troubleshooting information for our network admi
 
 #### Description & Usage
 
-**Running service**
-
-By default service will use host IP address and port 9000
+By default service will use the host IP address and port 9000
 
     ./bin/service
-
-**Technology**
 
 * Frontend - Bootstrap 3, jQuery
 * Backend - Python 3.x, Flask, SQLAlchemy
