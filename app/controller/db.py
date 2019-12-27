@@ -56,51 +56,50 @@ class DBController(object):
     def aggregate_tests(dict_items, limit):
         aggregated_dict, count = [], 0
 
-        for dict in dict_items:
+        for x in dict_items:
             if len(aggregated_dict) == 0:
-                aggregated_dict.append(dict)
-            elif dict['room_number'] == aggregated_dict[count]['room_number'] \
-                    and dict['conn_type'] == aggregated_dict[count]['conn_type']:
-                for test_item in dict['tests']:
+                aggregated_dict.append(x)
+            elif x['room_number'] == aggregated_dict[count]['room_number'] \
+                    and x['conn_type'] == aggregated_dict[count]['conn_type']:
+                for test_item in x['tests']:
                     if len(aggregated_dict[count]['tests']) == limit:  # limit number of results / room
                         del aggregated_dict[count]['tests'][-1]
                     aggregated_dict[count]['tests'].insert(0, test_item)  # descending order
             else:
-                aggregated_dict.append(dict)
+                aggregated_dict.append(x)
                 count += 1
 
         return aggregated_dict
 
-    def update_item(self, request_data):
+    def update_item(self, **data):
         assoc_obj = Association()
-        assoc_obj.connection = self.find_or_create_conn(request_data)
-        assoc_obj.room = self.find_or_create_room(request_data)
-        assoc_obj.test = self.create_speed_test(request_data)
+        assoc_obj.connection = self.find_or_create_conn(**data)
+        assoc_obj.room = self.find_or_create_room(**data)
+        assoc_obj.test = self.create_speed_test(**data)
 
         self.db.add(assoc_obj)
         self.db.commit()
-        return
 
-    def find_or_create_conn(self, request_data):
+    def find_or_create_conn(self, **data):
         conn_id = self.db.query(Connection.conn_id) \
-            .filter(Connection.conn_type == request_data.get('connType')) \
+            .filter(Connection.conn_type == data.get('connType')) \
             .first()
 
         if not conn_id:
-            return Connection().from_dict(**request_data)
+            return Connection().from_dict(**data)
 
         return self.db.query(Connection).get(conn_id)
 
-    def find_or_create_room(self, request_data):
+    def find_or_create_room(self, **data):
         room_id = self.db.query(Room.room_id) \
-            .filter(Room.room_number == request_data.get('roomNumber')) \
+            .filter(Room.room_number == data.get('roomNumber')) \
             .first()
 
         if not room_id:
-            return Room().from_dict(**request_data)
+            return Room().from_dict(**data)
 
         return self.db.query(Room).get(room_id)
 
     @staticmethod
-    def create_speed_test(request_data):
-        return SpeedTest().from_dict(**request_data)
+    def create_speed_test(**data):
+        return SpeedTest().from_dict(**data)

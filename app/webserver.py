@@ -36,16 +36,18 @@ def root():
 def data():
     if request.method == 'GET':
         conn_type = request.args.get('type', '').capitalize()
-        return json.dumps(db.obj_to_dict(conn_type, 5))
+        return json.dumps(db.obj_to_dict(conn_type, 5)), 200
 
-    elif request.method == 'POST' and request.headers.get('Content-Type', '') == 'application/json':
+    elif request.method == 'POST' and 'application/json' in request.headers.get('Content-Type', ''):
         db.update_item(**{'remote_addr': request.remote_addr, **request.get_json()})
-        return 'New item created, 201 Created'
+        return 'Item Created', 201
 
     elif request.method == 'DELETE':
         db.drop_tables(db.engine)
         db.create_tables(db.engine)
-        return 'DB reset'
+        return 'Database Reset', 204
+
+    return 'Bad Request', 400
 
 
 if __name__ == '__main__':
