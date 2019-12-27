@@ -1,5 +1,5 @@
-var imageAddr = "http://wallpaperswide.com/download/shadow_of_the_tomb_raider_2018_puzzle_video_game-wallpaper-7680x4800.jpg" + "?n=" + Math.random();
-var downloadSize = 5616998; //5.36Mb
+var imageAddr = "https://upload.wikimedia.org/wikipedia/commons/0/0c/Mengerschwamm_mit_kleinieren_Pendants_13082019_8K_002.png";
+var downloadSize = 296956723; // 35.4 Mb
 
 function initiateSpeedDetection() {
     window.setTimeout(measureConnectionSpeed, 1);
@@ -33,7 +33,7 @@ function measureConnectionSpeed() {
         var speedKbps = (speedBps / 1024).toFixed(2);
         var speedMbps = (speedKbps / 1024).toFixed(2);
         $("#testinput").removeClass("in").slideUp().waitMe("hide");
-        $("#speed").html("<h4>"+speedMbps+" Mb/s, that is: "+(speedMbps/8).toFixed(2)+" MB/s</h4>");
+        $("#speed").html("<h4>"+speedMbps+" Mb/s</h4>");
         $("#testresult").addClass("in").slideDown();
         sendResult(speedMbps);
     }
